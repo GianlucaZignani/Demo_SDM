@@ -4,7 +4,7 @@ function login(A){
   A.innerHTML=`<h1 style="text-align:center;font-size:24px;font-weight:700;margin:20px 0 14px">${t('Accedi ai servizi')}</h1><p style="text-align:center;font-weight:500;font-size:14px;line-height:1.5;margin:0 0 28px">Seleziona "Entra con Gel" se sei in possesso di credenziali SPID/CIE/CNS. Seleziona "Entra con utente locale" se sei in possesso di credenziali dell'Ente.</p>
   <div style="display:flex;flex-direction:column;gap:30px;align-items:center"><button class="btn" style="width:230px" onclick="doLogin()"><span style="width:22px;height:22px;border-radius:50%;background:#fff;color:var(--pr2);display:grid;place-items:center;font-size:11px"><i class="fa-solid fa-user"></i></span>Entra con Gel</button><button class="btn" style="width:230px" onclick="doLogin()">Entra con utente locale</button></div>`;
 }
-function doLogin(){S.auth=true;save();toast('Accesso effettuato');render()}
+function doLogin(){S.auth=true;save();toast('Accesso effettuato');transition('fade',render)}
 function account(A){
   if(!S.auth)return login(A);
   const tg=(ic,col,l,d,k)=>`<label style="display:flex;gap:12px;align-items:center;padding:12px 4px"><i class="${ic}" style="color:${col};width:24px;text-align:center"></i><span style="flex:1;font-size:13px;font-weight:500">${l}${d?`<span class="mut" style="display:block;font-size:11px;font-weight:400">${d}</span>`:''}</span><input type="checkbox" class="sw" ${S[k]?'checked':''} onchange="S['${k}']=this.checked;save();${k==='dark'?'applyTheme()':''}"></label>`;
