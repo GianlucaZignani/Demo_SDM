@@ -39,5 +39,12 @@ function openSheet(i){
   <div style="display:flex;gap:12px;margin-bottom:14px"><a class="obtn" href="tel:${p.t}"><i class="fa-solid fa-phone"></i>${t('Chiama')}</a><a class="obtn" target="_blank" rel="noopener" href="${p.w}"><i class="fa-solid fa-globe"></i>${t('Sito web')}</a></div>
   <b style="font-size:14px">Orari:</b><table style="width:100%;font-size:14px;margin:6px 0 10px;border-bottom:1px solid var(--bd)">${p.h.map(r=>`<tr><td style="padding:3px 0;font-weight:500">${r[0]}</td><td style="${r[2]?'color:#FF3B30;font-weight:600':''}">${r[1]}</td></tr>`).join('')}</table>
   <b style="font-size:14px">Indirizzo:</b><div style="margin:8px 0">${mapBox('smm',p.p)}</div><div style="font-size:14px">${p.a}</div>`;
-  $('#sheet').classList.add('on');map.panTo(p.p);miniMap('smm',p.p);
+  $('#sheet').classList.add('on');panToPin(p.p);miniMap('smm',p.p);
+}
+
+/* Centra il pin: su schermi grandi lo sposta a sinistra, per non farlo coprire dal pannello laterale di destra */
+function panToPin(ll){
+  const z=map.getZoom();let c=ll;
+  if(innerWidth>=768)c=map.unproject(map.project(ll,z).add([218,0]),z);
+  map.setView(c,z,{animate:true});
 }
