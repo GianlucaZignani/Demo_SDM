@@ -11,7 +11,8 @@ document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.tar
 document.addEventListener('touchstart',()=>{},{passive:true});
 const PRESS='.card[onclick],.pill,.mi,button.btn';
 let pressEl=null;
-document.addEventListener('pointerdown',e=>{const el=e.target.closest(PRESS);if(el){el.classList.add('pressed');pressEl=el}},{passive:true});
+const PRESSV=PRESS+',a.ind,a.btn,a.obtn';
+document.addEventListener('pointerdown',e=>{const el=e.target.closest(PRESSV);if(el){el.classList.add('pressed');pressEl=el}},{passive:true});
 ['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,()=>{if(pressEl){const el=pressEl;pressEl=null;setTimeout(()=>el.classList.remove('pressed'),170)}},{passive:true}));
 document.addEventListener('click',e=>{
   const el=e.target.closest(PRESS);
