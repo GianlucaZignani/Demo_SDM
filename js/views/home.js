@@ -2,8 +2,8 @@
 /* ============ HOME ============ */
 let F='Tutto',Q='',markers=[],me=null;
 function home(A){
-  A.innerHTML=`<div style="position:fixed;left:50%;transform:translateX(-50%);width:100%;max-width:480px;top:calc(72px + env(safe-area-inset-top));bottom:0"><div id="map" style="position:absolute;inset:0"></div>
-  <div style="position:absolute;top:0;left:0;right:0;z-index:900;background:var(--card);border-radius:0 0 24px 24px;padding:10px 14px 14px;box-shadow:0 4px 12px rgba(0,0,0,.2)"><div style="display:flex;gap:10px;align-items:center">
+  A.innerHTML=`<div class="mapwrap"><div id="map" style="position:absolute;inset:0"></div>
+  <div class="mpanel"><div style="display:flex;gap:10px;align-items:center">
   <button onclick="$('#fp').classList.toggle('hidden')" style="background:none;border:0;color:var(--tx);display:flex;flex-direction:column;align-items:center;font-size:11px;cursor:pointer"><i class="fa-solid fa-filter" style="font-size:22px"></i>${t('Filtro')}</button>
   <div class="sr"><input id="q" value="${esc(Q)}" placeholder="${t('Cerca i luoghi vicini a te...')}" oninput="Q=this.value;mark()"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>
   <div id="fp" class="hidden" style="position:absolute;left:14px;top:84px;width:210px;background:var(--card);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.35);max-height:55vh;overflow:auto"></div></div>
