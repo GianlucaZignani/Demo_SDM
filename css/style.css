@@ -40,3 +40,10 @@ h1.t{color:var(--pr);font-weight:700;font-size:22px;text-align:center;margin:0 0
 .err{border-color:#FF3B30!important}
 .leaflet-container{font-family:inherit}
 .fh{font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center;margin:14px 0 6px}.fh i{color:#000}html.dark .fh i{color:#fff}
+
+/* Card e pillole cliccabili: si comportano come veri bottoni */
+.card[onclick],.pill{cursor:pointer;-webkit-user-select:none;user-select:none;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+@media (hover:hover){.card[onclick]:hover,.pill:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.22)}}
+.card[onclick]:active,.pill:active{transform:scale(.96);box-shadow:0 1px 4px rgba(0,0,0,.2);filter:brightness(.92)}
+.card[onclick]:focus-visible,.pill:focus-visible{outline:3px solid var(--pr2);outline-offset:3px}
+.mi:active,.obtn:active{filter:brightness(.9);transform:scale(.98)}
