@@ -11,7 +11,9 @@ const applyTheme=()=>document.documentElement.classList.toggle('dark',S.dark);
 const BACK=(r='')=>`<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:12px"><button onclick="back()" style="background:none;border:0;color:var(--tx);cursor:pointer;padding:0;font-size:14px"><i class="fa-solid fa-chevron-left" style="font-size:12px"></i> ${t('Indietro')}</button><span class="mut">${r}</span></div>`;
 const SEARCH=(ph,fn)=>`<div style="display:flex;margin-bottom:16px"><div class="sr srw"><input id="sq" placeholder="${t(ph)}" oninput="${fn}(this.value)"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>`;
 const NOTH=`<p class="mut" style="text-align:center;padding:30px">Nessun risultato. Prova con altre parole chiave.</p>`;
-const dir=p=>`https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`;
+/* Indicazioni: Apple Mappe su iPhone/iPad, Google Maps altrove */
+const IS_APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
+const dir=p=>IS_APPLE?`https://maps.apple.com/?daddr=${p[0]},${p[1]}&dirflg=d`:`https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`;
 function miniMap(id,p){
   mms=mms.filter(m=>{if(!m.getContainer().isConnected||m.getContainer().id===id){m.remove();return false}return true});
   const el=document.getElementById(id);if(!el)return null;
