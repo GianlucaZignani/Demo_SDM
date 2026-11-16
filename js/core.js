@@ -31,5 +31,7 @@ function render(){
   mms.forEach(m=>m.remove());mms=[];
   if(map&&view!=='home'){map.remove();map=null}
   const A=$('#app');A.className=view==='home'?'':'main';A.innerHTML='';
-  ({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A);
+  ({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A);enhance();
 }
+
+function enhance(){document.querySelectorAll('.card[onclick]').forEach(c=>{c.setAttribute('role','button');c.tabIndex=0})}
