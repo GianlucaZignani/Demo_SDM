@@ -117,3 +117,10 @@ html[data-nav=fade]::view-transition-new(root){animation-name:vt-fade-in;animati
 @keyframes toast{0%{opacity:0;transform:translate(-50%,14px)}10%,85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,6px)}}
 .toast{animation:toast 2.4s ease both}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+
+/* Tasto "Indicazioni" (e altri link-bottone): si abbassa al tocco e apre le mappe */
+.ind{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+@media (hover:hover){.ind:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.45)}}
+.ind:active,.ind.pressed{transform:scale(.92);box-shadow:0 0 2px rgba(0,0,0,.4);filter:brightness(.9)}
+a.btn,a.obtn{touch-action:manipulation}
+a.btn.pressed,a.obtn.pressed{transform:scale(.96);filter:brightness(.92)}
