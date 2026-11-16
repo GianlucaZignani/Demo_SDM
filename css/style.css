@@ -74,3 +74,44 @@ h1.t{color:var(--pr);font-weight:700;font-size:22px;text-align:center;margin:0 0
  .main.wide #lst{grid-template-columns:repeat(3,1fr)}
 }
 @media (orientation:landscape) and (max-height:500px){.sheet{max-height:92vh}}
+
+/* ===== Animazioni stile Apple ===== */
+/* Transizioni tra schermate (View Transitions API) */
+.hdr{view-transition-name:hdr}
+::view-transition-group(hdr){animation:none}
+::view-transition-old(hdr){display:none}
+::view-transition-new(hdr){animation:none}
+::view-transition-group(root){animation-duration:.5s;animation-timing-function:cubic-bezier(.32,.72,0,1)}
+::view-transition-old(root),::view-transition-new(root){mix-blend-mode:normal;animation-duration:.5s;animation-timing-function:cubic-bezier(.32,.72,0,1);animation-fill-mode:both}
+html[data-nav=fwd]::view-transition-old(root){animation-name:vt-out-l;z-index:1}
+html[data-nav=fwd]::view-transition-new(root){animation-name:vt-in-r;z-index:2;box-shadow:-12px 0 32px rgba(0,0,0,.25)}
+html[data-nav=back]::view-transition-old(root){animation-name:vt-out-r;z-index:2;box-shadow:-12px 0 32px rgba(0,0,0,.25)}
+html[data-nav=back]::view-transition-new(root){animation-name:vt-in-l;z-index:1}
+html[data-nav=fade]::view-transition-old(root){animation-name:vt-fade-out;animation-duration:.25s}
+html[data-nav=fade]::view-transition-new(root){animation-name:vt-fade-in;animation-duration:.45s}
+@keyframes vt-out-l{to{transform:translateX(-28%);filter:brightness(.85)}}
+@keyframes vt-in-r{from{transform:translateX(100%)}}
+@keyframes vt-out-r{to{transform:translateX(100%)}}
+@keyframes vt-in-l{from{transform:translateX(-28%);filter:brightness(.85)}}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-fade-in{from{opacity:0;transform:translateY(10px) scale(.985)}}
+/* Ripiego per browser senza View Transitions */
+@keyframes fb-fwd{from{opacity:0;transform:translateX(36px)}}
+@keyframes fb-back{from{opacity:0;transform:translateX(-36px)}}
+@keyframes fb-fade{from{opacity:0;transform:translateY(10px)}}
+@keyframes fb-fade-o{from{opacity:0}}
+.in-fwd{animation:fb-fwd .45s cubic-bezier(.32,.72,0,1) backwards}
+.in-back{animation:fb-back .45s cubic-bezier(.32,.72,0,1) backwards}
+.in-fade{animation:fb-fade .45s cubic-bezier(.32,.72,0,1) backwards}
+.in-fade-o{animation:fb-fade-o .35s ease backwards}
+/* Le card delle liste salgono una dopo l'altra */
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.stagger #lst>*{animation:rise .55s cubic-bezier(.32,.72,0,1) backwards;animation-delay:calc(var(--i,0)*55ms)}
+/* Elementi flottanti con effetto molla */
+.sheet{transition:transform .5s cubic-bezier(.32,.72,0,1)}
+.menu{transition:opacity .2s ease,transform .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{opacity:0;transform:scale(.85)}}
+#fp:not(.hidden){animation:pop .35s cubic-bezier(.34,1.56,.64,1);transform-origin:top left}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,14px)}10%,85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,6px)}}
+.toast{animation:toast 2.4s ease both}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
