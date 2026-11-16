@@ -67,7 +67,9 @@ h1.t{color:var(--pr);font-weight:700;font-size:22px;text-align:center;margin:0 0
 }
 @media (min-width:960px){
  .main.wide{max-width:1040px}
- .main.wide #lst{display:grid!important;grid-template-columns:repeat(2,1fr);gap:22px!important;align-items:start}
+ .main.wide #lst{display:grid!important;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:22px!important;align-items:stretch}
+ .main.wide #lst>.card{display:flex;flex-direction:column;justify-content:center;height:100%;box-sizing:border-box}
+ .main.wide #lst>.pill{height:100%}
 }
 @media (min-width:1280px){
  .main.wide{max-width:1200px}
