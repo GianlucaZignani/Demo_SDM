@@ -1,8 +1,8 @@
 /* Router, menu, header, mini-mappe */
 /* ============ NAVIGAZIONE ============ */
 let view='home',arg=null,stack=[],map=null,mms=[];
-function go(v,a,noPush){if(!noPush)stack.push([view,arg]);view=v;arg=a??null;closeAll();render();window.scrollTo(0,0)}
-function back(){const p=stack.pop();if(p){view=p[0];arg=p[1];closeAll();render();window.scrollTo(0,0)}else go('home',null,true)}
+function go(v,a,noPush){const dir=DETAIL.includes(v)?'fwd':'fade';if(!noPush)stack.push([view,arg]);view=v;arg=a??null;closeAll();transition(dir,()=>{render();window.scrollTo(0,0)})}
+function back(){const p=stack.pop();if(p){view=p[0];arg=p[1];closeAll();transition('back',()=>{render();window.scrollTo(0,0)})}else go('home',null,true)}
 function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2400)}
 function closeAll(){$('#menu').classList.remove('on');$('#sheet').classList.remove('on')}
 const unread=()=>NOTIF.filter(n=>!S.read.includes(n.id)).length;
@@ -32,6 +32,18 @@ function render(){
   if(map&&view!=='home'){map.remove();map=null}
   const A=$('#app');A.className=view==='home'?'':'main'+(['notif','events','services','admin','orgs'].includes(view)?' wide':'');A.innerHTML='';
   ({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A);enhance();
+  if(document.documentElement.dataset.nav==='fade'&&$('#lst')){A.classList.add('stagger');setTimeout(()=>A.classList.remove('stagger'),900)}
 }
 
-function enhance(){document.querySelectorAll('.card[onclick]').forEach(c=>{c.setAttribute('role','button');c.tabIndex=0})}
+function enhance(){document.querySelectorAll('#lst>*').forEach((c,i)=>c.style.setProperty('--i',Math.min(i,8)));document.querySelectorAll('.card[onclick]').forEach(c=>{c.setAttribute('role','button');c.tabIndex=0})}
+
+/* Transizioni tra schermate stile iOS: push (fwd), pop (back), dissolvenza (fade).
+   Usa la View Transitions API; dove non esiste ripiega su una semplice animazione CSS. */
+const DETAIL=['notifD','eventD','serviceD','orgs','sindaco'];
+const REDUCED=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function transition(dir,fn){
+  document.documentElement.dataset.nav=dir;
+  if(document.startViewTransition&&!REDUCED()){document.startViewTransition(fn);return}
+  fn();
+  if(!REDUCED())$('#app').classList.add('in-'+(view==='home'?'fade-o':dir));
+}
