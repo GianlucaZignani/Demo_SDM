@@ -9,7 +9,7 @@ const unread=()=>NOTIF.filter(n=>!S.read.includes(n.id)).length;
 function badge(){const u=unread(),b=$('#badge');b.textContent=u;b.style.display=u?'grid':'none'}
 const applyTheme=()=>document.documentElement.classList.toggle('dark',S.dark);
 const BACK=(r='')=>`<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:12px"><button onclick="back()" style="background:none;border:0;color:var(--tx);cursor:pointer;padding:0;font-size:14px"><i class="fa-solid fa-chevron-left" style="font-size:12px"></i> ${t('Indietro')}</button><span class="mut">${r}</span></div>`;
-const SEARCH=(ph,fn)=>`<div style="display:flex;margin-bottom:16px"><div class="sr" style="max-width:340px;margin:0 auto"><input id="sq" placeholder="${t(ph)}" oninput="${fn}(this.value)"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>`;
+const SEARCH=(ph,fn)=>`<div style="display:flex;margin-bottom:16px"><div class="sr srw"><input id="sq" placeholder="${t(ph)}" oninput="${fn}(this.value)"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>`;
 const NOTH=`<p class="mut" style="text-align:center;padding:30px">Nessun risultato. Prova con altre parole chiave.</p>`;
 const dir=p=>`https://www.google.com/maps/dir/?api=1&destination=${p[0]},${p[1]}`;
 function miniMap(id,p){
@@ -30,7 +30,7 @@ function render(){
   badge();renderMenu();
   mms.forEach(m=>m.remove());mms=[];
   if(map&&view!=='home'){map.remove();map=null}
-  const A=$('#app');A.className=view==='home'?'':'main';A.innerHTML='';
+  const A=$('#app');A.className=view==='home'?'':'main'+(['notif','events','services','admin','orgs'].includes(view)?' wide':'');A.innerHTML='';
   ({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A);enhance();
 }
 
