@@ -39,7 +39,7 @@ const POIS=[
 {n:'Guardia di Finanza - Comando Compagnia',c:'Sicurezza',p:[45.4215,9.2605],a:'Via Emilia 44, San Donato Milanese',h:[['Servizio','24 ore su 24']],t:'+390255600333',w:'https://www.gdf.gov.it',f:'gdf-san-donato.jpg'},
 
 /* --- VERDE E SVAGO (7) --- */
-{n:'Parco Enrico Mattei',c:'Verde e svago',p:[45.4135,9.2705],a:'Via Libertà, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+39022527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'parco-mattei.jpg'},
+{n:'Parco Enrico Mattei',c:'Verde e svago',p:[45.427260,9.259442],a:'Via Libertà, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+39022527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'parco-mattei.jpg'},
 {n:'Parco Nord / Laghetto di San Donato',c:'Verde e svago',p:[45.4210,9.2675],a:'Via Caviaga, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+3902527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'laghetto-san-donato.jpg'},
 {n:'Parco Borghetto / Bagnolo',c:'Verde e svago',p:[45.4035,9.2665],a:'Via Bagnolo, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+3902527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'parco-bagnolo.jpg'},
 {n:'Centro Sportivo Mattei (Piscina e Campi)',c:'Verde e svago',p:[45.4148,9.2718],a:'Via Caviaga 6, San Donato Milanese',h:[['Lunedì - Venerdì','7:00 - 22:00'],['Sabato - Domenica','9:00 - 19:00']],t:'+39025271001',w:'https://www.comune.sandonatomilanese.mi.it',f:'centro-sportivo-mattei.jpg'},
