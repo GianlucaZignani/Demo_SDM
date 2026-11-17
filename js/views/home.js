@@ -36,7 +36,7 @@ function openSheet(i){
   const p=POIS[i];
   $('#sheet').innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">${im(IMG.luoghi+p.f,'width:72px;height:72px;border-radius:12px;object-fit:cover;flex:none','fa-location-dot')}<h2 class="pr" style="flex:1;text-align:center;font-weight:700;font-size:19px;margin:0">${p.n}</h2>
   <button onclick="$('#sheet').classList.remove('on')" style="background:none;border:0;color:var(--tx);cursor:pointer;font-size:11px;display:flex;flex-direction:column;align-items:center"><i class="fa-regular fa-circle-xmark" style="font-size:22px"></i>${t('Chiudi')}</button></div>
-  <div style="display:flex;gap:12px;margin-bottom:14px"><a class="obtn" href="tel:${p.t}"><i class="fa-solid fa-phone"></i>${t('Chiama')}</a><a class="obtn" target="_blank" rel="noopener" href="${p.w}"><i class="fa-solid fa-globe"></i>${t('Sito web')}</a></div>
+  <div style="display:flex;gap:12px;margin-bottom:14px">${p.t?`<a class="obtn" href="tel:${p.t}"><i class="fa-solid fa-phone"></i>${t('Chiama')}</a>`:''}${p.w?`<a class="obtn" target="_blank" rel="noopener" href="${p.w}"><i class="fa-solid fa-globe"></i>${t('Sito web')}</a>`:''}</div>
   <b style="font-size:14px">Orari:</b><table style="width:100%;font-size:14px;margin:6px 0 10px;border-bottom:1px solid var(--bd)">${p.h.map(r=>`<tr><td style="padding:3px 0;font-weight:500">${r[0]}</td><td style="${r[2]?'color:#FF3B30;font-weight:600':''}">${r[1]}</td></tr>`).join('')}</table>
   <b style="font-size:14px">Indirizzo:</b><div style="margin:8px 0">${mapBox('smm',p.p)}</div><div style="font-size:14px">${p.a}</div>`;
   $('#sheet').classList.add('on');panToPin(p.p);miniMap('smm',p.p);
