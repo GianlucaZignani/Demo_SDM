@@ -37,7 +37,13 @@ const POIS=[
 {n:'Stazione Ferroviaria San Donato Milanese',c:'Servizi urbani',p:[45.42415,9.25910],a:'Via Emilia, San Donato Milanese',h:[['Tutti i giorni','5:00 - 00:30']],t:'+390272494949',w:'https://www.trenord.it',f:'stazione-fs-san-donato.jpg'},
 
 /* --- RISTORANTI (3) --- */
-{n:'Nonna Emilia',c:'Ristoranti',p:[45.41655,9.26185],a:'Via Monte Bianco
+{n:'Nonna Emilia Moderna Trattoria',c:'Ristoranti',p:[45.41655,9.26185],a:'Via Monte Bianco 33, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],w:'http://www.nonnaemilia.it',f:'nonna-emilia.jpg'},
+{n:'Ristorante Eolo',c:'Ristoranti',p:[45.41705,9.26240],a:'Via Monte Bianco 8, San Donato Milanese',h:[['Martedì - Domenica','12:00 - 14:30 / 19:00 - 22:00']],f:'ristorante-eolo.jpg'},
+{n:'SottoSopra',c:'Ristoranti',p:[45.4062,9.2775],a:'Via Emilia 26, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'+390251800607',w:'https://www.italia.it/it/lombardia/san-donato-milanese/dove-mangiare/sottosopra',f:'sottosopra.jpg'},
+
+/* --- HOTEL --- */
+{n:'UNAHOTELS The One Milano',c:'Hotel',p:[45.4236,9.2598],a:'Via Maastricht 3, San Donato Milanese',h:[['Reception','24 ore su 24']],w:'https://www.unahotels.it',f:'unahotels-the-one.jpg'}
+];
 
 const NOTIF=[
 {id:1,t:'Street Food: al via la stagione dello Street Food',d:'12 novembre 2026',e:'Nel corso del weekend Hop Hop Street Food offrirà la possibilità di assaporare specialità culinarie.',b:['In piazza Santa Barbara è in programma il primo dei cinque appuntamenti del 2026 dedicati al "cibo di strada". Da marzo a settembre, piazza Santa Barbara ospiterà cinque eventi gastronomici, ognuno con specialità diverse.','Si parte dal 20 al 22 marzo con Hop Hop Street Food, un viaggio tra sapori nazionali e internazionali. Dal 15 al 17 maggio sarà la volta della cucina siciliana, mentre dal 12 al 14 giugno protagonisti saranno la carbonara e i piatti della tradizione romana.','A fine estate, il 4 e 5 agosto, spazio al Beer Festival, per poi concludere la rassegna dal 18 al 20 settembre con le specialità valtellinesi.'],p:[45.4150,9.2650],pl:'Piazza Santa Barbara',f:'street-food.jpg',i:'fa-burger'},
