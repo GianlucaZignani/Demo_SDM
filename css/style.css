@@ -124,3 +124,17 @@ html[data-nav=fade]::view-transition-new(root){animation-name:vt-fade-in;animati
 .ind:active,.ind.pressed{transform:scale(.92);box-shadow:0 0 2px rgba(0,0,0,.4);filter:brightness(.9)}
 a.btn,a.obtn{touch-action:manipulation}
 a.btn.pressed,a.obtn.pressed{transform:scale(.96);filter:brightness(.92)}
+
+/* Foto profilo: avatar cliccabile e finestra di scelta */
+.av{position:relative;width:68px;height:68px;border-radius:50%;border:0;color:#fff;font-size:22px;font-weight:700;display:grid;place-items:center;cursor:pointer;flex:none;padding:0;transition:transform .15s ease}
+.av:active{transform:scale(.93)}
+.avc{position:absolute;right:-3px;bottom:-3px;width:24px;height:24px;border-radius:50%;background:var(--pr2);color:#fff;font-size:11px;display:grid;place-items:center;border:2px solid var(--card)}
+.avo{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.42);display:flex;align-items:flex-end;justify-content:center;animation:avfade .25s ease}
+.avp{width:100%;max-width:440px;background:var(--card);border-radius:24px 24px 0 0;padding:12px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:avup .45s cubic-bezier(.32,.72,0,1)}
+.avo.out{animation:avfadeout .23s ease forwards}.avo.out .avp{animation:avdown .23s ease forwards}
+.emg{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.em{aspect-ratio:1;border:2px solid transparent;border-radius:14px;background:var(--bg);font-size:26px;cursor:pointer;transition:transform .15s ease;padding:0}
+.em:active{transform:scale(.88)}.em.sel{border-color:var(--pr2)}
+@keyframes avfade{from{opacity:0}}@keyframes avfadeout{to{opacity:0}}
+@keyframes avup{from{transform:translateY(100%)}}@keyframes avdown{to{transform:translateY(100%)}}
+@media (min-width:768px){.avo{align-items:center}.avp{border-radius:24px}}
