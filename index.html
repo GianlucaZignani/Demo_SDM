@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -18,7 +20,7 @@
     <nav style="display:flex;gap:2px">
       <button class="hb" id="bAcc"><i class="fa-regular fa-circle-user"></i>Account</button>
       <button class="hb" id="bNot"><i class="fa-regular fa-bell"></i>Notifiche<span class="bdg" id="badge"></span></button>
-      <button class="hb" id="bMenu"><i class="fa-solid fa-bars"></i>Menu <i class="fa-solid fa-chevron-down" style="font-size:8px"></i></button>
+      <button class="hb" id="bMenu"><i class="fa-solid fa-bars"></i>Menù</button>
     </nav>
   </header>
   <div class="menu" id="menu"></div>
@@ -31,6 +33,7 @@
 <script src="js/data.js"></script>
 <script src="js/core.js"></script>
 <script src="js/views/home.js"></script>
+<script src="js/views/galleria.js"></script>
 <script src="js/views/notifiche.js"></script>
 <script src="js/views/eventi.js"></script>
 <script src="js/views/servizi.js"></script>
