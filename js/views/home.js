@@ -12,7 +12,7 @@ function home(A){
   map=L.map('map',{zoomControl:false,attributionControl:false,minZoom:11,maxZoom:19}).setView([45.4115,9.2715],14);
   L.control.zoom({position:'bottomright'}).addTo(map);
   L.control.attribution({position:'bottomleft',prefix:false}).addTo(map);
-  L.tileLayer(S.dark?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19,attribution:'© OpenStreetMap, © CARTO'}).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Immagini © Esri'}).addTo(map);
   map.on('click',()=>{closeSheet();$('#fp').classList.add('hidden')});
   map.on('zoomend moveend',()=>setTimeout(updateLabels,70));
   cl=L.markerClusterGroup?L.markerClusterGroup({maxClusterRadius:46,showCoverageOnHover:false,spiderfyOnMaxZoom:true,disableClusteringAtZoom:17,
