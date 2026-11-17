@@ -5,3 +5,5 @@ geolocalizzata, consultare gli eventi in programma e ricevere aggiornamenti in t
 di pubblica utilità tramite notifiche push mirate. Progettata in perfetta continuità con i contenuti e i database del
 portale istituzionale esistente, l’app garantisce un’esperienza coerente e familiare, facilitando l’adozione da parte
 dell’utenza grazie a un’interfaccia fluida e priva di barriere d’apprendimento.
+
+Questa è una DEMO, le informazioni e i dati sono solo a scopo illustrativo
