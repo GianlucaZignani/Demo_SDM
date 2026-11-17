@@ -75,12 +75,13 @@ function selectPin(p){
 function closeSheet(){$('#sheet').classList.remove('on');selM=null;updateLabels()}
 function openSheet(i){
   const p=POIS[i];
-  $('#sheet').innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">${im(IMG.luoghi+p.f,'width:72px;height:72px;border-radius:12px;object-fit:cover;flex:none','fa-location-dot')}<h2 class="pr" style="flex:1;text-align:center;font-weight:700;font-size:19px;margin:0">${p.n}</h2>
+  $('#sheet').innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><button class="thumb" onclick="openGallery(${i})" aria-label="Apri le foto del luogo">${im(IMG.luoghi+p.f,'width:72px;height:72px;border-radius:12px;object-fit:cover;display:block','fa-location-dot')}<span class="thb" id="thb" data-i="${i}"><i class="fa-solid fa-expand"></i></span></button><h2 class="pr" style="flex:1;text-align:center;font-weight:700;font-size:19px;margin:0">${p.n}</h2>
   <button onclick="closeSheet()" style="background:none;border:0;color:var(--tx);cursor:pointer;font-size:11px;display:flex;flex-direction:column;align-items:center"><i class="fa-regular fa-circle-xmark" style="font-size:22px"></i>${t('Chiudi')}</button></div>
   <div style="display:flex;gap:12px;margin-bottom:14px">${p.t?`<a class="obtn" href="tel:${p.t}"><i class="fa-solid fa-phone"></i>${t('Chiama')}</a>`:''}${p.w?`<a class="obtn" target="_blank" rel="noopener" href="${p.w}"><i class="fa-solid fa-globe"></i>${t('Sito web')}</a>`:''}</div>
   <b style="font-size:14px">Orari:</b><table style="width:100%;font-size:14px;margin:6px 0 10px;border-bottom:1px solid var(--bd)">${p.h.map(r=>`<tr><td style="padding:3px 0;font-weight:500">${r[0]}</td><td style="${r[2]?'color:#FF3B30;font-weight:600':''}">${r[1]}</td></tr>`).join('')}</table>
-  <b style="font-size:14px">Indirizzo:</b><div style="margin:8px 0">${mapBox('smm',p.p)}</div><div style="font-size:14px">${p.a}</div>`;
-  $('#sheet').classList.add('on');selectPin(p);panToPin(p.p);miniMap('smm',p.p);
+  <b style="font-size:14px">Indirizzo:</b><div style="margin:8px 0">${mapBox('smm',p.p)}</div><div style="font-size:14px">${p.a}</div>${related(p)}`;
+  $('#sheet').classList.add('on');$('#sheet').scrollTop=0;selectPin(p);panToPin(p.p);miniMap('smm',p.p);
+  galleryFor(p).then(l=>{const b=$('#thb');if(b&&b.dataset.i===String(i)&&l.length>1)b.innerHTML='<i class="fa-regular fa-images"></i> '+l.length});
 }
 
 /* Centra il pin: su schermi grandi lo sposta a sinistra, per non farlo coprire dal pannello laterale di destra */
@@ -88,4 +89,16 @@ function panToPin(ll){
   const z=map.getZoom();let c=ll;
   if(innerWidth>=768)c=map.unproject(map.project(ll,z).add([218,0]),z);
   map.setView(c,z,{animate:true});
+}
+
+/* Eventi e notizie legati al luogo (entro 60 m dal pin), in un carosello orizzontale */
+const near=(a,b,r=60)=>Math.hypot((a[0]-b[0])*111000,(a[1]-b[1])*78500)<=r;
+function related(p){
+  const items=[
+    ...NOTIF.filter(n=>near(n.p,p.p)).map(n=>({k:'Notizia',c:'#FF9500',t:n.t,d:n.d,img:IMG.notifiche+n.f,ic:n.i,on:`readN(${n.id})`})),
+    ...EVENTI.filter(e=>near(e.p,p.p)).map(e=>({k:'Evento',c:'#34C759',t:e.t,d:e.d,img:IMG.eventi+e.f,ic:'fa-calendar-days',on:`go('eventD',${e.id})`}))];
+  const body=items.length
+    ?`<div class="hs">${items.map(x=>`<div class="card ev" onclick="${x.on}">${im(x.img,'width:100%;height:86px;object-fit:cover;display:block','' + x.ic)}<div style="padding:10px 12px 12px"><span class="tg" style="background:${x.c}">${x.k}</span><div class="evt">${x.t}</div><div class="mut" style="font-size:11.5px;margin-top:4px">${x.d}</div></div></div>`).join('')}</div>`
+    :`<p class="mut" style="font-size:13px;margin:0">Nessun evento o notizia per questo luogo al momento.</p>`;
+  return `<b style="font-size:14px;display:block;margin:20px 0 10px">Eventi e notizie</b>${body}`;
 }
