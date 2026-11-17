@@ -157,3 +157,7 @@ html.dark .pl{color:#f2f2f7;text-shadow:0 0 2px #000,0 0 3px #000,0 0 3px #000,0
 .leaflet-control-zoom a{background:var(--card)!important;color:var(--tx)!important;border-bottom-color:var(--bd)!important}
 @media (pointer:coarse){.leaflet-control-zoom{display:none}}
 .leaflet-control-attribution{font-size:9px!important;background:rgba(255,255,255,.7)!important;border-radius:8px;margin:0 0 4px 4px!important}
+
+/* Mappa satellitare: nomi bianchi con alone scuro, leggibili sulle foto */
+.pl,html.dark .pl{color:#fff;text-shadow:0 0 2px #000,0 0 3px #000,0 0 3px #000,0 0 6px rgba(0,0,0,.8)}
+.leaflet-control-attribution{color:#333}
