@@ -1,8 +1,6 @@
-/* Dati: luoghi, notifiche, eventi, servizi, amministrazione */
 /* ============ DATI ============ */
 const CATS={'Istruzione':'#FF9500','Sanità e assistenza':'#FF3B30','Servizi':'#A2845E','Sicurezza':'#0A84FF','Verde e svago':'#34C759','Servizi urbani':'#FFCC00','Ristoranti':'#32ADE6','Hotel':'#AF52DE'};
 const H1=[['Lunedì - Venerdì','8:30 - 19:30'],['Sabato','9:00 - 13:00'],['Domenica','Chiuso',1]];
-const H2=[['Lunedì - Venerdì','9:00 - 12:30'],['Sabato - Domenica','Chiuso',1]];
 const H3=[['Tutti i giorni','7:30 - 19:00']];
 
 const POIS=[
@@ -37,12 +35,12 @@ const POIS=[
 {n:'Stazione Ferroviaria San Donato Milanese',c:'Servizi urbani',p:[45.42415,9.25910],a:'Via Emilia, San Donato Milanese',h:[['Tutti i giorni','5:00 - 00:30']],t:'+390272494949',w:'https://www.trenord.it',f:'stazione-fs-san-donato.jpg'},
 
 /* --- RISTORANTI (3) --- */
-{n:'Nonna Emilia Moderna Trattoria',c:'Ristoranti',p:[45.41655,9.26185],a:'Via Monte Bianco 33, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],w:'http://www.nonnaemilia.it',f:'nonna-emilia.jpg'},
-{n:'Ristorante Eolo',c:'Ristoranti',p:[45.41705,9.26240],a:'Via Monte Bianco 8, San Donato Milanese',h:[['Martedì - Domenica','12:00 - 14:30 / 19:00 - 22:00']],f:'ristorante-eolo.jpg'},
+{n:'Nonna Emilia Moderna Trattoria',c:'Ristoranti',p:[45.41655,9.26185],a:'Via Monte Bianco 33, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'',w:'http://www.nonnaemilia.it',f:'nonna-emilia.jpg'},
+{n:'Ristorante Eolo',c:'Ristoranti',p:[45.41705,9.26240],a:'Via Monte Bianco 8, San Donato Milanese',h:[['Martedì - Domenica','12:00 - 14:30 / 19:00 - 22:00']],t:'',w:'',f:'ristorante-eolo.jpg'},
 {n:'SottoSopra',c:'Ristoranti',p:[45.4062,9.2775],a:'Via Emilia 26, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'+390251800607',w:'https://www.italia.it/it/lombardia/san-donato-milanese/dove-mangiare/sottosopra',f:'sottosopra.jpg'},
 
 /* --- HOTEL --- */
-{n:'UNAHOTELS The One Milano',c:'Hotel',p:[45.4236,9.2598],a:'Via Maastricht 3, San Donato Milanese',h:[['Reception','24 ore su 24']],w:'https://www.unahotels.it',f:'unahotels-the-one.jpg'}
+{n:'UNAHOTELS The One Milano',c:'Hotel',p:[45.4236,9.2598],a:'Via Maastricht 3, San Donato Milanese',h:[['Reception','24 ore su 24']],t:'',w:'https://www.unahotels.it',f:'unahotels-the-one.jpg'}
 ];
 
 const NOTIF=[
@@ -58,11 +56,9 @@ const EVENTI=[
 const SERV=[
 {id:1,t:'A.I.R.E. - Anagrafe degli italiani residenti all\'estero',s:'L\'A.I.R.E. è l\'anagrafe della popolazione italiana residente all\'estero. Chi si trasferisce all\'estero per un periodo superiore a un anno deve iscriversi all\'A.I.R.E. nel Comune di residenza in Italia.',to:'Cittadini italiani che risiedono all\'estero con i seguenti requisiti:<br>• avere trasferito la residenza all\'estero per un periodo superiore a dodici mesi<br>• non essere lavoratori stagionali<br>• non essere dipendenti di ruolo dello stato in servizio all\'estero',d:'L\'A.I.R.E. è l\'anagrafe della popolazione italiana residente all\'estero. Chi si trasferisce all\'estero per un periodo superiore a un anno deve iscriversi all\'A.I.R.E. Al link <a class="pr" href="https://www.esteri.it" target="_blank" rel="noopener">https://www.esteri.it</a> del Ministero degli Affari Esteri e della Cooperazione Internazionale è possibile trovare informazioni dettagliate e utili per il cittadino italiano che intende risiedere all\'estero.',l:['Ministero degli Affari Esteri','Servizi Consolari Fast It'],f:'L\'interessato deve fare richiesta di iscrizione all\'A.I.R.E. attraverso il portale dei Servizi Consolari Fast It.<br><br>È possibile comunicare il trasferimento all\'estero all\'Ufficio A.I.R.E. pochi giorni prima della partenza con apposita richiesta da trasmettere al Comune.'},
 {id:2,t:'Accertamento di compatibilità paesaggistica',s:'L\'accertamento di compatibilità paesaggistica è un passaggio che porta al rilascio o al diniego dell\'autorizzazione paesaggistica in sanatoria.',to:'Proprietari di immobili in zone soggette a vincolo paesaggistico.',d:'Verifica la compatibilità paesaggistica degli interventi realizzati senza autorizzazione, secondo la normativa vigente.',l:['Portale SUE','Regione Lombardia'],f:'Presenta l\'istanza tramite il portale SUE allegando progetto e documentazione fotografica.'},
-{id:3,t:'Accesso civico generalizzato',s:'Si utilizza per accedere ad atti e/o documenti detenuti dal Comune ulteriori rispetto a quelli soggetti a pubblicazione obbligatoria.',to:'Chiunque, senza obbligo di motivazione.',d:'Consente a chiunque di richiedere documenti, dati e informazioni ulteriori rispetto a quelli già pubblicati (D.Lgs. 33/2013).',l:['Amministrazione trasparente','ANAC'],f:'Invia la richiesta via PEC o dal modulo online al protocollo del Comune.'},
+{id:3,text:'Accesso civico generalizzato',s:'Si utilizza per accedere ad atti e/o documenti detenuti dal Comune ulteriori rispetto a quelli soggetti a pubblicazione obbligatoria.',to:'Chiunque, senza obbligo di motivazione.',d:'Consente a chiunque di richiedere documenti, dati e informazioni ulteriori rispetto a quelli già pubblicati (D.Lgs. 33/2013).',l:['Amministrazione trasparente','ANAC'],f:'Invia la richiesta via PEC o dal modulo online al protocollo del Comune.'},
 {id:4,t:'Accesso civico semplice',s:'L\'accesso civico semplice è destinato ai soli atti ed informazioni oggetto di obblighi di pubblicazione, secondo il principio che chiunque ha il diritto di richiederli nei casi in cui sia stata omessa la loro pubblicazione.',to:'Chiunque rilevi omissioni nella sezione Amministrazione trasparente.',d:'Permette di chiedere la pubblicazione di documenti e dati per cui è previsto l\'obbligo di pubblicazione e che risultano omessi.',l:['Amministrazione trasparente'],f:'Scrivi al Responsabile della trasparenza indicando il dato mancante.'}];
 
 const ADM=['Organi di governo','Aree amministrative','Uffici','Politici','Personale amministrativo','Documenti e dati'];
-
 const ORG=['Sindaco','Giunta Comunale','Presidente del Consiglio Comunale','Consiglio comunale','Commissioni','Comitato di Quartiere Poasco-Sorigherio'];
-
 const CAT_REP=['Manto stradale e buche','Segnaletica danneggiata','Illuminazione pubblica','Rifiuti e pulizia urbana','Verde pubblico','Altro'];
