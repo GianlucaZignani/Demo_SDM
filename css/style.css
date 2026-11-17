@@ -161,3 +161,32 @@ html.dark .pl{color:#f2f2f7;text-shadow:0 0 2px #000,0 0 3px #000,0 0 3px #000,0
 /* Mappa satellitare: nomi bianchi con alone scuro, leggibili sulle foto */
 .pl,html.dark .pl{color:#fff;text-shadow:0 0 2px #000,0 0 3px #000,0 0 3px #000,0 0 6px rgba(0,0,0,.8)}
 .leaflet-control-attribution{color:#333}
+
+/* ===== Scheda luogo: miniatura cliccabile e carosello eventi/notizie ===== */
+.thumb{position:relative;flex:none;padding:0;border:0;background:none;border-radius:12px;cursor:pointer;transition:transform .15s ease}
+.thumb:active{transform:scale(.93)}
+.thumb .ph{border-radius:12px}
+.thb{position:absolute;right:4px;bottom:4px;background:rgba(0,0,0,.62);color:#fff;font-size:10px;font-weight:600;border-radius:8px;padding:2px 6px;display:flex;gap:4px;align-items:center}
+.hs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:4px 20px 14px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.hs::-webkit-scrollbar{height:4px}.hs::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.card.ev{padding:0;flex:0 0 68%;max-width:240px;scroll-snap-align:start;overflow:hidden;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.18);text-align:left}
+.tg{display:inline-block;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:2px 7px;margin-bottom:5px}
+.evt{font-weight:700;font-size:13.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* ===== Foto a tutto schermo ===== */
+.gv{position:fixed;inset:0;z-index:3000;background:#000;display:flex;flex-direction:column;animation:avfade .3s ease}
+.gv.out{animation:avfadeout .25s ease forwards}
+.gtr{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gtr::-webkit-scrollbar{display:none}
+.gs{flex:0 0 100%;scroll-snap-align:center;display:grid;place-items:center;padding:70px 0 80px;box-sizing:border-box}
+.gs img{max-width:100%;max-height:calc(100vh - 150px);object-fit:contain;animation:gzoom .45s cubic-bezier(.32,.72,0,1)}
+.gph{color:#aaa;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:14px}.gph i{font-size:48px}
+.gx{position:absolute;top:calc(14px + env(safe-area-inset-top));right:14px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;z-index:2;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .15s}
+.gx:active,.gn:active{transform:scale(.9)}
+.gt{position:absolute;top:calc(24px + env(safe-area-inset-top));left:18px;right:74px;color:#fff;font-weight:600;font-size:15px;text-shadow:0 1px 4px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2}
+.gd{position:absolute;left:0;right:0;bottom:calc(28px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:10px;z-index:2}
+.gdt{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.4);cursor:pointer;transition:transform .2s,background .2s}
+.gdt.on{background:#fff;transform:scale(1.35)}
+.gn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;cursor:pointer;z-index:2}
+.gp{left:16px}.gnx{right:16px}
+@media (pointer:coarse){.gn{display:none}}
+@keyframes gzoom{from{transform:scale(.94);opacity:0}}
