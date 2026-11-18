@@ -230,3 +230,11 @@ html.dark .stt{background:#1c3a25;color:#6CD98A}
 @media (hover:hover){.mi:hover{background:rgba(10,132,255,.1);color:var(--pr)}.mi:hover i{transform:scale(1.15)}}
 .mi:focus-visible{outline:3px solid var(--pr2);outline-offset:-3px}
 .mi.pressed,.mi:active{transform:scale(.97);background:rgba(10,132,255,.16);filter:none}
+
+/* Maniglia di trascinamento della scheda del luogo */
+.grab{display:flex;justify-content:center;padding:0 0 14px;margin-top:-4px;cursor:grab;touch-action:none}
+.grab i{width:42px;height:5px;border-radius:3px;background:var(--bd)}
+.grab:active{cursor:grabbing}
+@media (min-width:768px){.grab{display:none}}
+.sheet{overscroll-behavior:contain}
+.gtr{touch-action:pan-x}
