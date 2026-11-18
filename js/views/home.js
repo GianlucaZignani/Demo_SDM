@@ -72,7 +72,7 @@ function selectPin(p){
 function closeSheet(){$('#sheet').classList.remove('on');selM=null;updateLabels()}
 function openSheet(i){
   const p=POIS[i];
-  $('#sheet').innerHTML=`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><button class="thumb" onclick="openGallery(${i})" aria-label="Apri le foto del luogo">${im(IMG.luoghi+p.f,'width:72px;height:72px;border-radius:12px;object-fit:cover;display:block','fa-location-dot')}<span class="thb" id="thb" data-i="${i}"><i class="fa-solid fa-expand"></i></span></button><h2 class="pr" style="flex:1;text-align:center;font-weight:700;font-size:19px;margin:0">${p.n}</h2>
+  $('#sheet').innerHTML=`<div class="grab"><i></i></div><div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><button class="thumb" onclick="openGallery(${i})" aria-label="Apri le foto del luogo">${im(IMG.luoghi+p.f,'width:72px;height:72px;border-radius:12px;object-fit:cover;display:block','fa-location-dot')}<span class="thb" id="thb" data-i="${i}"><i class="fa-solid fa-expand"></i></span></button><h2 class="pr" style="flex:1;text-align:center;font-weight:700;font-size:19px;margin:0">${p.n}</h2>
   <button onclick="closeSheet()" style="background:none;border:0;color:var(--tx);cursor:pointer;font-size:11px;display:flex;flex-direction:column;align-items:center"><i class="fa-regular fa-circle-xmark" style="font-size:22px"></i>${t('Chiudi')}</button></div>
   <div style="display:flex;gap:12px;margin-bottom:14px">${p.t?`<a class="obtn" href="tel:${p.t}"><i class="fa-solid fa-phone"></i>${t('Chiama')}</a>`:''}${p.w?`<a class="obtn" target="_blank" rel="noopener" href="${p.w}"><i class="fa-solid fa-globe"></i>${t('Sito web')}</a>`:''}</div>
   <b style="font-size:14px">Orari:</b><table style="width:100%;font-size:14px;margin:6px 0 10px;border-bottom:1px solid var(--bd)">${p.h.map(r=>`<tr><td style="padding:3px 0;font-weight:500">${r[0]}</td><td style="${r[2]?'color:#FF3B30;font-weight:600':''}">${r[1]}</td></tr>`).join('')}</table>
@@ -119,6 +119,7 @@ function openGallery(i){
   <div class="gt">${esc(p.n)}</div>
   <div class="gtr" id="gtr"><div class="gs"><div class="gph"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div><div id="gnav"></div>`;
   document.body.appendChild(o);
+  galleryDrag(o);
   const tr=$('#gtr');
   tr.addEventListener('scroll',()=>{const k=Math.round(tr.scrollLeft/tr.clientWidth);document.querySelectorAll('.gdt').forEach((d,j)=>d.classList.toggle('on',j===k))},{passive:true});
   const fill=l=>{const v=$('#gv');if(!v||v.dataset.p!==p.n)return;if(l.length||!v.dataset.done){v.dataset.done=1;fillViewer(p,l)}};
@@ -145,3 +146,54 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')gGo(-1);
   if(e.key==='ArrowRight')gGo(1);
 });
+
+/* ============ TRASCINA PER CHIUDERE ============ */
+/* Scheda del luogo: segue il dito (o il mouse sulla maniglia); oltre una soglia o con uno scatto veloce si chiude, altrimenti rimbalza al suo posto.
+   Su telefono si trascina verso il basso, su tablet/computer verso destra. */
+function dragClose(el,close,isOpen){
+  let sx=0,sy=0,d=0,on=false,ok=false,t0=0;
+  const hz=()=>innerWidth>=768,val=e=>hz()?e.clientX-sx:e.clientY-sy;
+  const begin=(e,grab)=>{if(!isOpen())return;sx=e.clientX;sy=e.clientY;d=0;on=false;t0=performance.now();ok=grab||el.scrollTop<=0};
+  const move=e=>{
+    if(!ok)return;const v=val(e);
+    if(!on){if(v>8){on=true;el.style.transition='none'}else return}
+    d=Math.max(0,v);el.style.transform=hz()?`translateX(${d}px)`:`translateY(${d}px)`;
+    if(e.cancelable)e.preventDefault();
+  };
+  const end=()=>{
+    if(!on){ok=false;return}
+    on=false;ok=false;
+    const fast=d>40&&d/Math.max(1,performance.now()-t0)>.6;
+    el.style.transition='';
+    if(d>(hz()?120:100)||fast)close();
+    el.style.transform='';
+  };
+  el.addEventListener('touchstart',e=>begin(e.touches[0],false),{passive:true});
+  el.addEventListener('touchmove',e=>move(e.touches[0]),{passive:false});
+  el.addEventListener('touchend',end);el.addEventListener('touchcancel',end);
+  el.addEventListener('mousedown',e=>{
+    if(!e.target.closest('.grab'))return;
+    begin(e,true);
+    const up=()=>{end();removeEventListener('mousemove',move);removeEventListener('mouseup',up)};
+    addEventListener('mousemove',move);addEventListener('mouseup',up);
+  });
+}
+dragClose($('#sheet'),closeSheet,()=>$('#sheet').classList.contains('on'));
+/* Foto a schermo intero: trascina verso il basso per chiudere */
+function galleryDrag(o){
+  let sx=0,sy=0,d=0,mode='';
+  o.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;d=0;mode=''},{passive:true});
+  o.addEventListener('touchmove',e=>{
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(!mode&&(Math.abs(dx)>8||Math.abs(dy)>8))mode=Math.abs(dy)>Math.abs(dx)&&dy>0?'v':'h';
+    if(mode!=='v')return;
+    d=Math.max(0,dy);o.style.transition='none';o.style.transform=`translateY(${d}px)`;o.style.opacity=String(Math.max(.3,1-d/450));
+    if(e.cancelable)e.preventDefault();
+  },{passive:false});
+  const end=()=>{
+    if(mode!=='v')return;mode='';
+    if(d>110){o.remove();return}
+    o.style.transition='transform .35s cubic-bezier(.32,.72,0,1),opacity .35s';o.style.transform='';o.style.opacity='';
+  };
+  o.addEventListener('touchend',end);o.addEventListener('touchcancel',end);
+}
