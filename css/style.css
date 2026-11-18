@@ -223,3 +223,10 @@ html.dark .stt{background:#1c3a25;color:#6CD98A}
 .stat{text-align:center;padding:16px 10px}
 .stat .n{font-size:30px;font-weight:800;color:var(--pr);line-height:1}
 .stat .l{font-size:12px;margin-top:6px;color:var(--mut)}
+
+/* Voci del menù: stesso comportamento dei bottoni dell'app */
+.mi{transition:transform .15s ease,background-color .15s ease,color .15s ease,filter .15s ease}
+.mi i{transition:transform .15s ease}
+@media (hover:hover){.mi:hover{background:rgba(10,132,255,.1);color:var(--pr)}.mi:hover i{transform:scale(1.15)}}
+.mi:focus-visible{outline:3px solid var(--pr2);outline-offset:-3px}
+.mi.pressed,.mi:active{transform:scale(.97);background:rgba(10,132,255,.16);filter:none}
