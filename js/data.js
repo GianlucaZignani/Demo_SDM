@@ -25,7 +25,7 @@ const POIS=[
 {n:'Protezione Civile San Donato Milanese',c:'Sicurezza',p:[45.40945,9.27240],a:'Via Cesare Battisti 21, San Donato Milanese',h:[['Reperibilità','24 ore su 24']],t:'+390251800077',w:'http://protezionecivilesdm.org',f:'protezione-civile.jpg'},
 
 /* --- VERDE E SVAGO (3) --- */
-{n:'Centro Sportivo Enrico Mattei',c:'Verde e svago',p:[45.41580,9.27120],a:'Via Caviaga 4, San Donato Milanese',h:[['Lunedì - Venerdì','8:00 - 23:00'],['Sabato - Domenica','8:00 - 19:30']],t:'+39025271001',w:'https://www.comune.sandonatomilanese.mi.it',f:['parco-mattei1.jpg','parco-mattei2.jpg','parco-mattei3.jpg','parco-mattei4.jpg']},
+{n:'Centro Sportivo Enrico Mattei',c:'Verde e svago',p:[45.41580,9.27120],a:'Via Caviaga 4, San Donato Milanese',h:[['Lunedì - Venerdì','8:00 - 23:00'],['Sabato - Domenica','8:00 - 19:30']],t:'+39025271001',w:'https://www.comune.sandonatomilanese.mi.it',f:'parco-mattei.jpg'},
 {n:'Laghetto Europa',c:'Verde e svago',p:[45.41195,9.27680],a:'Via Europa 5, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+3902527721',w:'https://www.ecomuseovettabbiafontanili.it/itinerari/evf_luoghi-di-interesse-laghetto-di-via-europa/',f:'laghetto-europa.jpg'},
 {n:'Cascina Roma - Centro Culturale',c:'Verde e svago',p:[45.41382,9.26415],a:'Piazza delle Arti 6, San Donato Milanese',h:[['Lunedì - Sabato','9:30 - 12:30 / 14:30 - 18:30'],['Domenica','10:00 - 12:30 / 16:30 - 19:00']],t:'+390252772409',w:'https://cascinaromafotografia.it',f:'cascina-roma.jpg'},
 
