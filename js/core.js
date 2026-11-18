@@ -25,7 +25,7 @@ const mapBox=(id,p)=>`<div style="position:relative"><div id="${id}" class="mm">
 
 /* Menu */
 function renderMenu(){
-  const it=[['Vivere la città','events','fa-map'],['Servizi','services','fa-table-cells-large'],['Pagamenti online','pay','fa-credit-card'],['Amministrazione','admin',''],['Contatti','contacts','fa-phone'],['Segnalazioni','report','fa-triangle-exclamation']];
+  const it=[['Vivere la città','events','fa-map'],['Servizi','services','fa-table-cells-large'],['Pagamenti online','pay','fa-credit-card'],['Amministrazione','admin','fa-landmark'],['Contatti','contacts','fa-phone'],['Segnalazioni','report','fa-triangle-exclamation']];
   $('#menu').innerHTML=it.map(x=>`<button class="mi" onclick="go('${x[1]}')"><i class="fa-solid ${x[2]}"></i>${t(x[0])}</button>`).join('');
 }
 function render(){
