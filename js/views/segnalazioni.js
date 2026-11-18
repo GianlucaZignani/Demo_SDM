@@ -1,33 +1,63 @@
-/* Schermata Segnalazioni (modulo a 4 step) */
+/* Schermata Segnalazioni (modulo a 4 step, nello stile dell'app) */
 /* ============ SEGNALAZIONI ============ */
-let R={cat:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[],name:'',email:'',tel:''};
+const REPICON={'Manto stradale e buche':'fa-road','Segnaletica danneggiata':'fa-sign-hanging','Illuminazione pubblica':'fa-lightbulb','Rifiuti e pulizia urbana':'fa-trash-can','Verde pubblico':'fa-tree','Altro':'fa-ellipsis'};
+const R0=()=>({cat:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[],pv:[],name:'',email:'',tel:''});
+let R=R0();
+const stepH=(n,ti,sub)=>`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><span class="sn">${n}</span><div style="min-width:0"><b class="pr" style="font-size:16px">${ti}</b>${sub?`<div class="mut" style="font-size:12px;margin-top:1px">${sub}</div>`:''}</div></div>`;
 function report(A){
-  if(S.auth&&!R.name){R.name='Mario Rossi';R.email='mario.rossi@example.it'}
-  A.innerHTML=`<h1 class="t" style="color:var(--tx)">${t('Segnalazioni')}</h1>
-  <div class="fh" style="margin-top:0"><i class="fa-solid fa-location-dot"></i>1. COSA STAI SEGNALANDO?</div>
-  <select id="rc" class="inp" onchange="R.cat=this.value"><option value="">Scegli la categoria del disservizio</option>${CAT_REP.map(c=>`<option ${R.cat===c?'selected':''}>${c}</option>`).join('')}</select>
-  <div class="fh"><i class="fa-solid fa-map-location-dot"></i>2. DOVE SI TROVA IL PROBLEMA?</div>
-  <div id="mm" class="mm" style="border-radius:4px"></div><input id="ra" class="inp" style="margin-top:6px" placeholder="Via e numero civico" value="${esc(R.addr)}" oninput="R.addr=this.value">
-  <label style="display:flex;gap:8px;align-items:center;margin-top:6px;font-size:13px"><input type="checkbox" id="rg" ${R.gps?'checked':''} onchange="useGps(this.checked)"> Usa la mia posizione GPS attuale</label>
-  <div class="fh"><i class="fa-solid fa-camera"></i>3. DETTAGLI DELLA SEGNALAZIONE</div>
-  <input id="rs" class="inp" placeholder="Soggetto (es. Buca profonda)" value="${esc(R.sub)}" oninput="R.sub=this.value"><textarea id="rd" class="inp" rows="3" style="margin-top:6px" placeholder="Descrizione dettagliata del problema" oninput="R.desc=this.value">${esc(R.desc)}</textarea>
-  <p style="font-size:13px;margin:8px 0 4px">Aggiungi foto (Opzionale)</p><input type="file" id="rf" accept="image/jpeg,image/png" multiple hidden onchange="addF(this.files)">
-  <button class="btn" style="padding:7px 14px;font-size:13px;border-radius:6px" onclick="$('#rf').click()">+ AGGIUNGI FOTO</button><div class="mut" style="font-size:12px;margin-top:4px">Max 3 file (.JPEG, PNG)</div><div id="fl" style="font-size:13px"></div>
-  <div class="fh"><i class="fa-solid fa-pen"></i>4. I TUOI RECAPITI</div>${S.auth?'<p class="mut" style="font-size:12px;margin:0 0 6px"><i class="fa-solid fa-lock"></i> Dati precompilati dal tuo account</p>':''}
-  <input id="rn" class="inp" placeholder="Nome e Cognome" value="${esc(R.name)}" oninput="R.name=this.value"><input id="re" type="email" class="inp" style="margin-top:6px" placeholder="Email" value="${esc(R.email)}" oninput="R.email=this.value"><input id="rt" type="tel" class="inp" style="margin-top:6px" placeholder="Telefono (facoltativo)" value="${esc(R.tel)}" oninput="R.tel=this.value">
-  <div style="text-align:center;margin-top:18px"><button class="btn" style="border-radius:8px;font-weight:700" onclick="sendR()">INVIA SEGNALAZIONE UFFICIALE</button></div>
-  ${S.reports.length?`<h2 class="font-bold" style="margin:24px 0 10px">Le tue segnalazioni</h2>`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:10px 14px;margin-bottom:10px;border-radius:14px"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div style="font-size:13px">${esc(r.cat)}: ${esc(r.sub)}</div></div>`).join(''):''}`;
+  if(S.auth&&!R.name){R.name='Mario Rossi';R.email=R.email||'mario.rossi@example.it'}
+  A.innerHTML=`<h1 class="t" style="margin-bottom:4px">${t('Segnalazioni')}</h1>
+  <p class="mut" style="text-align:center;font-size:14px;margin:0 0 18px">Segnala un problema alla città: bastano pochi minuti.</p>
+  <div style="display:flex;flex-direction:column;gap:16px">
+  <section class="card">${stepH(1,'Cosa stai segnalando?')}
+    <div class="tiles" id="rc">${CAT_REP.map(c=>`<button type="button" class="tile${R.cat===c?' on':''}" data-c="${esc(c)}" onclick="pickCat(this)"><i class="fa-solid ${REPICON[c]||'fa-circle'}"></i><span>${c}</span></button>`).join('')}</div></section>
+  <section class="card">${stepH(2,'Dove si trova il problema?','Tocca la mappa per spostare il segnaposto')}
+    <div id="mm" class="mm" style="border-radius:16px;margin-bottom:10px"></div>
+    <input id="ra" class="fi" placeholder="Via e numero civico" value="${esc(R.addr)}" oninput="R.addr=this.value;this.classList.remove('err')">
+    <label class="row" style="padding-bottom:0"><span class="ic" style="background:#0A84FF"><i class="fa-solid fa-location-crosshairs"></i></span><span style="flex:1;font-size:14px;font-weight:500">Usa la mia posizione attuale</span><input type="checkbox" id="rg" class="sw" ${R.gps?'checked':''} onchange="useGps(this.checked)"></label></section>
+  <section class="card">${stepH(3,'Dettagli della segnalazione')}
+    <input id="rs" class="fi" placeholder="Soggetto (es. Buca profonda)" value="${esc(R.sub)}" oninput="R.sub=this.value;this.classList.remove('err')">
+    <textarea id="rd" class="fi" rows="4" style="margin-top:10px" placeholder="Descrizione dettagliata del problema" oninput="R.desc=this.value;this.classList.remove('err')">${esc(R.desc)}</textarea>
+    <div style="font-size:13px;font-weight:600;margin:14px 0 8px">Foto <span class="mut" style="font-weight:400">(facoltativo · max 3 · JPEG, PNG)</span></div>
+    <div class="ph3" id="fl"></div><input type="file" id="rf" accept="image/jpeg,image/png" multiple hidden onchange="addF(this.files);this.value=''"></section>
+  <section class="card">${stepH(4,'I tuoi recapiti',S.auth?'Compilati dal tuo account':'')}
+    ${S.auth?'':`<div class="row" style="padding-top:0"><span class="ic" style="background:#5856D6"><i class="fa-solid fa-user-lock"></i></span><span style="flex:1;font-size:13px">Hai un account? Accedi per precompilare i dati.</span><button type="button" class="btn sec" style="padding:8px 16px;font-size:13px" onclick="go('account')">Accedi</button></div>`}
+    <input id="rn" class="fi" placeholder="Nome e Cognome" value="${esc(R.name)}" oninput="R.name=this.value;this.classList.remove('err')">
+    <input id="re" type="email" class="fi" style="margin-top:10px" placeholder="Email" value="${esc(R.email)}" oninput="R.email=this.value;this.classList.remove('err')">
+    <input id="rt" type="tel" class="fi" style="margin-top:10px" placeholder="Telefono (facoltativo)" value="${esc(R.tel)}" oninput="R.tel=this.value"></section>
+  <button class="btn" style="width:100%;font-weight:700" onclick="sendR()"><i class="fa-solid fa-paper-plane"></i> INVIA SEGNALAZIONE UFFICIALE</button></div>
+  ${S.reports.length?`<h2 class="sech" id="mine">LE TUE SEGNALAZIONI</h2><div style="display:flex;flex-direction:column;gap:10px">`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:12px 14px;display:flex;gap:12px;align-items:center"><span class="ic" style="background:#0A84FF"><i class="fa-solid ${REPICON[r.cat]||'fa-circle'}"></i></span><div style="flex:1;min-width:0"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div class="mut" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.cat)} · ${esc(r.sub)}</div></div><span class="stt">Presa in carico</span></div>`).join('')+`</div>`:''}`;
   const m=miniMap('mm',R.pos||[45.4108,9.2736]);
-  m.on('click',e=>{R.pos=[e.latlng.lat,e.latlng.lng];R.gps=false;$('#rg').checked=false;m._mk.setLatLng(e.latlng)});
+  m.on('click',e=>{R.pos=[e.latlng.lat,e.latlng.lng];R.gps=false;$('#rg').checked=false;m._mk.setLatLng(e.latlng);$('#ra').classList.remove('err')});
   window._rm=m;fl();
+}
+function pickCat(el){
+  R.cat=el.dataset.c;
+  document.querySelectorAll('#rc .tile').forEach(b=>b.classList.toggle('on',b===el));
+  $('#rc').classList.remove('err');
 }
 function useGps(on){
   R.gps=on;if(!on)return;
   if(!navigator.geolocation){toast('Geolocalizzazione non disponibile');$('#rg').checked=false;R.gps=false;return}
-  navigator.geolocation.getCurrentPosition(p=>{R.pos=[p.coords.latitude,p.coords.longitude];_rm.setView(R.pos,17);_rm._mk.setLatLng(R.pos)},()=>{toast('Impossibile ottenere la posizione. Controlla i permessi.');$('#rg').checked=false;R.gps=false});
+  navigator.geolocation.getCurrentPosition(p=>{R.pos=[p.coords.latitude,p.coords.longitude];_rm.setView(R.pos,17);_rm._mk.setLatLng(R.pos);$('#ra').classList.remove('err')},()=>{toast('Impossibile ottenere la posizione. Controlla i permessi.');$('#rg').checked=false;R.gps=false});
 }
-function addF(fs){for(const f of fs){if(R.files.length>=3){toast('Puoi caricare al massimo 3 foto');break}R.files.push(f.name)}fl()}
-function fl(){$('#fl').innerHTML=R.files.map((n,i)=>`<div style="display:flex;justify-content:space-between;padding:3px 0"><span><i class="fa-regular fa-image pr"></i> ${esc(n)}</span><button style="background:none;border:0;color:#FF3B30;cursor:pointer" onclick="R.files.splice(${i},1);fl()" aria-label="Rimuovi"><i class="fa-solid fa-xmark"></i></button></div>`).join('')}
+function addF(fs){
+  for(const f of fs){
+    if(R.files.length>=3){toast('Puoi caricare al massimo 3 foto');break}
+    if(!/^image\/(jpeg|png)$/.test(f.type)){toast('Formato non supportato: usa JPEG o PNG');continue}
+    R.files.push(f.name);R.pv.push(URL.createObjectURL(f));
+  }
+  fl();
+}
+function rmF(i){URL.revokeObjectURL(R.pv[i]);R.files.splice(i,1);R.pv.splice(i,1);fl()}
+function fl(){
+  const el=$('#fl');if(!el)return;
+  el.innerHTML=[0,1,2].map(i=>R.pv[i]
+    ?`<div class="slot"><img src="${R.pv[i]}" alt="${esc(R.files[i])}"><button type="button" class="x" onclick="rmF(${i})" aria-label="Rimuovi foto"><i class="fa-solid fa-xmark"></i></button></div>`
+    :i===R.files.length
+      ?`<button type="button" class="slot add" onclick="$('#rf').click()"><i class="fa-solid fa-camera"></i>Aggiungi foto</button>`
+      :`<div class="slot emp"></div>`).join('');
+}
 function sendR(){
   document.querySelectorAll('.err').forEach(e=>e.classList.remove('err'));
   const bad=[];
@@ -35,8 +65,9 @@ function sendR(){
   if(bad.length){bad.forEach(i=>$('#'+i).classList.add('err'));$('#'+bad[0]).scrollIntoView({behavior:'smooth',block:'center'});toast('Compila i campi evidenziati');return}
   const code='#SDM-2026-'+String(Math.floor(1000+Math.random()*9000));
   S.reports.push({code,cat:R.cat,sub:R.sub,desc:R.desc,addr:R.addr,pos:R.pos,files:R.files,name:R.name,email:R.email,tel:R.tel,date:new Date().toLocaleDateString('it-IT')});save();
-  R={cat:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[],name:'',email:'',tel:''};
+  R.pv.forEach(u=>URL.revokeObjectURL(u));R=R0();
   mms.forEach(m=>m.remove());mms=[];
-  $('#app').innerHTML=`<div class="card" style="padding:28px;text-align:center;margin-top:20px"><div style="width:72px;height:72px;border-radius:50%;background:#34C759;color:#fff;display:grid;place-items:center;font-size:32px;margin:0 auto 14px"><i class="fa-solid fa-check"></i></div><h1 class="t">Segnalazione inviata</h1><p class="mut" style="line-height:1.5">Il Comune ha preso in carico la tua pratica. Conserva il codice per seguirne lo stato.</p><div style="font-size:26px;font-weight:800;margin:14px 0" class="pr">${code}</div><button class="btn" onclick="render()">Torna alle segnalazioni</button></div>`;
+  $('#app').innerHTML=`<div class="card" style="padding:30px 20px;text-align:center;margin-top:10px"><div class="okc"><i class="fa-solid fa-check"></i></div><h1 class="t" style="margin-bottom:6px">Segnalazione inviata</h1><p class="mut" style="line-height:1.5;margin:0;font-size:14px">Il Comune ha preso in carico la tua pratica.<br>Conserva il codice per seguirne lo stato.</p><div class="tk">${code}</div>
+  <div style="display:flex;flex-direction:column;gap:10px;align-items:center"><button class="btn" style="width:100%;max-width:300px" onclick="render()">Nuova segnalazione</button><button class="btn sec" style="width:100%;max-width:300px" onclick="render();setTimeout(()=>{const m=$('#mine');m&&m.scrollIntoView({behavior:'smooth'})},80)">Le mie segnalazioni</button></div></div>`;
   window.scrollTo(0,0);toast('Segnalazione inviata con successo');
 }
