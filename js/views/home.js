@@ -15,10 +15,7 @@ function home(A){
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Immagini © Esri'}).addTo(map);
   map.on('click',()=>{closeSheet();$('#fp').classList.add('hidden')});
   map.on('zoomend moveend',()=>setTimeout(updateLabels,70));
-  cl=L.markerClusterGroup?L.markerClusterGroup({maxClusterRadius:46,showCoverageOnHover:false,spiderfyOnMaxZoom:true,disableClusteringAtZoom:17,
-    iconCreateFunction:c=>L.divIcon({html:`<div class="cl"><span>${c.getChildCount()}</span></div>`,className:'',iconSize:[42,42]})}):L.layerGroup();
-  cl.addTo(map);
-  if(cl.on)cl.on('animationend',()=>setTimeout(updateLabels,50));
+  cl=L.layerGroup().addTo(map);
   me=L.marker([45.4112,9.2680],{icon:L.divIcon({className:'',html:'<div class="me"><i></i></div>',iconSize:[22,22]}),zIndexOffset:-500,interactive:false}).addTo(map);
   filt();mark();
 }
@@ -59,7 +56,7 @@ function updateLabels(){
     m._icon.querySelector('.pl').classList.remove('show');
     rects.push([p.x-17,p.y-42,p.x+17,p.y]);
   });
-  const cand=(z>=15?vis:vis.filter(m=>m===selM)).sort((a,b)=>(b===selM)-(a===selM));
+  const cand=(z>=13?vis:vis.filter(m=>m===selM)).sort((a,b)=>(b===selM)-(a===selM));
   cand.forEach(m=>{
     const p=m._pt,w=Math.min(m._name.length*6.4+8,148),r=[p.x+21,p.y-36,p.x+21+w,p.y-20];
     if(m!==selM&&rects.some(q=>r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]))return;
@@ -102,3 +99,49 @@ function related(p){
     :`<p class="mut" style="font-size:13px;margin:0">Nessun evento o notizia per questo luogo al momento.</p>`;
   return `<b style="font-size:14px;display:block;margin:20px 0 10px">Eventi e notizie</b>${body}`;
 }
+
+/* ============ FOTO DEL LUOGO A TUTTO SCHERMO ============ */
+const GAL={};
+/* Cerca da sola le foto: nome.jpg, nome-2.jpg ... nome-6.jpg (oppure l'elenco "g" del luogo in data.js) */
+function galleryFor(p){
+  if(GAL[p.n])return GAL[p.n];
+  const m=p.f.match(/(\.[^.]+)$/),ext=m?m[1]:'.jpg',base=p.f.replace(/\.[^.]+$/,'');
+  const cand=p.g&&p.g.length?p.g:[p.f,...[2,3,4,5,6].map(n=>`${base}-${n}${ext}`)];
+  const probe=f=>new Promise(r=>{const i=new Image();i.onload=()=>r(IMG.luoghi+f);i.onerror=()=>r(null);i.src=IMG.luoghi+f});
+  return GAL[p.n]=Promise.all(cand.map(probe)).then(a=>a.filter(Boolean));
+}
+/* Si apre subito a tutto schermo; le foto compaiono appena trovate */
+function openGallery(i){
+  const p=POIS[i];closeGallery(true);
+  const o=document.createElement('div');
+  o.id='gv';o.className='gv';o.dataset.p=p.n;o.setAttribute('role','dialog');o.setAttribute('aria-label','Foto di '+p.n);
+  o.innerHTML=`<button class="gx" onclick="closeGallery()" aria-label="Chiudi"><i class="fa-solid fa-xmark"></i></button>
+  <div class="gt">${esc(p.n)}</div>
+  <div class="gtr" id="gtr"><div class="gs"><div class="gph"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div><div id="gnav"></div>`;
+  document.body.appendChild(o);
+  const tr=$('#gtr');
+  tr.addEventListener('scroll',()=>{const k=Math.round(tr.scrollLeft/tr.clientWidth);document.querySelectorAll('.gdt').forEach((d,j)=>d.classList.toggle('on',j===k))},{passive:true});
+  const fill=l=>{const v=$('#gv');if(!v||v.dataset.p!==p.n)return;if(l.length||!v.dataset.done){v.dataset.done=1;fillViewer(p,l)}};
+  setTimeout(()=>fill([]),3000);
+  galleryFor(p).then(fill);
+}
+function fillViewer(p,list){
+  const sl=list.length?list:[null];
+  $('#gtr').innerHTML=sl.map(u=>`<div class="gs">${u?`<img src="${u}" alt="${esc(p.n)}">`:`<div class="gph"><i class="fa-solid fa-image"></i><span>Nessuna foto disponibile</span></div>`}</div>`).join('');
+  $('#gnav').innerHTML=sl.length>1?`<button class="gn gp" onclick="gGo(-1)" aria-label="Foto precedente"><i class="fa-solid fa-chevron-left"></i></button><button class="gn gnx" onclick="gGo(1)" aria-label="Foto successiva"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="gd">${sl.map((_,k)=>`<button class="gdt${k?'':' on'}" onclick="gTo(${k})" aria-label="Foto ${k+1} di ${sl.length}"></button>`).join('')}</div>`:'';
+}
+function gCur(){const t=$('#gtr');return Math.round(t.scrollLeft/t.clientWidth)}
+function gTo(k){const t=$('#gtr');if(t)t.scrollTo({left:k*t.clientWidth,behavior:'smooth'})}
+function gGo(d){const t=$('#gtr');if(t)gTo(Math.max(0,Math.min(t.children.length-1,gCur()+d)))}
+function closeGallery(now){
+  const o=$('#gv');if(!o)return;
+  if(now){o.remove();return}
+  o.classList.add('out');setTimeout(()=>o.remove(),250);
+}
+document.addEventListener('keydown',e=>{
+  if(!$('#gv'))return;
+  if(e.key==='Escape')closeGallery();
+  if(e.key==='ArrowLeft')gGo(-1);
+  if(e.key==='ArrowRight')gGo(1);
+});
