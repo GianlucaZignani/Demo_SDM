@@ -33,7 +33,9 @@ function render(){
   mms.forEach(m=>m.remove());mms=[];
   if(map&&view!=='home'){map.remove();map=null}
   const A=$('#app');A.className=view==='home'?'':'main'+(['notif','events','services','admin','orgs'].includes(view)?' wide':'');A.innerHTML='';
-  ({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A);enhance();
+  try{({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A)}
+  catch(err){console.error(err);A.innerHTML=`<div class="card" style="margin:20px;text-align:center"><b>Si è verificato un errore</b><p class="mut" style="font-size:13px;margin:8px 0 0">${esc(err.message)}<br>Controlla che tutti i file siano stati caricati e ricarica la pagina.</p></div>`}
+  enhance();
   if(document.documentElement.dataset.nav==='fade'&&$('#lst')){A.classList.add('stagger');setTimeout(()=>A.classList.remove('stagger'),900)}
 }
 
