@@ -18,12 +18,11 @@ function account(A){
   <div class="card" style="display:flex;gap:16px;align-items:center">${avatarBtn()}<div style="min-width:0"><b style="font-size:19px">Mario Rossi</b>
     <div class="mut" style="font-size:13px;margin-top:4px"><i class="fa-solid fa-cake-candles" style="width:18px"></i>12/05/1985</div>
     <div class="mut" style="font-size:13px;margin-top:2px"><i class="fa-solid fa-location-dot" style="width:18px"></i>San Donato Milanese (MI)</div></div></div>
-  <p class="mut" style="font-size:12px;text-align:center;margin:8px 0 0">Tocca la foto per cambiarla</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
     <div class="card stat" onclick="go('report')"><div class="n">${S.reports.length}</div><div class="l">Le mie segnalazioni</div></div>
     <div class="card stat" onclick="go('notif')"><div class="n">${unread()}</div><div class="l">Notifiche non lette</div></div></div>
   <h2 class="sech">PREFERENZE APP</h2>
-  <div class="card" style="padding:4px 16px"><div class="row"><span class="ic" style="background:#0A84FF"><i class="fa-solid fa-globe"></i></span><span style="flex:1;font-size:14px;font-weight:500">Lingua / Language</span><select class="fi" style="width:auto;padding:8px 12px" onchange="S.lang=this.value;save();render()"><option value="it" ${S.lang==='it'?'selected':''}>Italiano</option><option value="en" ${S.lang==='en'?'selected':''}>English</option></select></div>${tg('#5856D6','fa-moon','Tema Scuro / Dark Mode','','dark')}</div>
+  <div class="card" style="padding:4px 16px"><div class="row"><span class="ic" style="background:#0A84FF"><i class="fa-solid fa-globe"></i></span><span style="flex:1;font-size:14px;font-weight:500">Lingua</span><select class="fi" style="width:auto;padding:8px 12px" onchange="S.lang=this.value;save();render()"><option value="it" ${S.lang==='it'?'selected':''}>Italiano</option><option value="en" ${S.lang==='en'?'selected':''}>English</option></select></div>${tg('#5856D6','fa-moon','Tema Scuro','','dark')}</div>
   <h2 class="sech">NOTIFICHE E AVVISI</h2>
   <div class="card" style="padding:4px 16px">${tg('#FF9500','fa-triangle-exclamation','Avvisi di pubblica utilità','Allerte meteo, scioperi e viabilità','alerts')}${tg('#34C759','fa-calendar-days','Eventi e Manifestazioni','Street food, sagre e mercati','events')}</div>
   <button class="btn" style="width:100%;margin-top:24px;background:rgba(255,59,48,.12);color:#D70015;box-shadow:none" onclick="S.auth=false;save();toast('Disconnesso');go('home',null,true)"><i class="fa-solid fa-right-from-bracket"></i> ${t("Esci dall'Account")}</button>`;
