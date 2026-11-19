@@ -253,3 +253,20 @@ html.dark .obtn{box-shadow:0 3px 8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,2
 .obtn:focus-visible,.ind:focus-visible{outline:3px solid var(--pr2);outline-offset:2px}
 /* Correzione: "Indicazioni" resta in basso a destra sulla mappa */
 .ind{position:absolute;right:10px;bottom:10px;z-index:500}
+
+/* ===== Contatti ===== */
+.ccol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.cgrid{display:grid;gap:16px}
+@media (min-width:960px){.main.cw{max-width:1040px}.cgrid{grid-template-columns:1fr 1fr;align-items:start;gap:20px}}
+.crow{display:flex;align-items:center}
+.crow+.crow{border-top:1px solid var(--bd)}
+.crow .mi{flex:1;min-width:0;border:0;border-radius:18px;text-decoration:none;padding:12px}
+.cpy{flex:none;width:40px;height:40px;margin-right:6px;border:0;border-radius:12px;background:var(--gr);color:var(--pr);font-size:15px;cursor:pointer;transition:transform .15s ease,background .15s}
+.cpy:active{transform:scale(.9)}
+@media (hover:hover){.cpy:hover{background:rgba(10,132,255,.15)}}
+.stt.no{background:#FFE5E3;color:#D70015}
+html.dark .stt.no{background:#43201d;color:#FF8A80}
+.hr{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border-radius:12px;font-size:14px}
+.hr+.hr{margin-top:2px}
+.hr.today{background:rgba(10,132,255,.12);font-weight:700;color:var(--pr)}
+.hr em{font-style:normal;font-size:10px;font-weight:700;background:var(--pr2);color:#fff;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
