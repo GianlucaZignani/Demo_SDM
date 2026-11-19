@@ -21,7 +21,7 @@ function miniMap(id,p){
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(m);
   m._mk=L.marker(p).addTo(m);mms.push(m);setTimeout(()=>m.invalidateSize(),350);return m;
 }
-const mapBox=(id,p)=>`<div style="position:relative"><div id="${id}" class="mm"></div><a class="ind" target="_blank" rel="noopener" href="${dir(p)}">${t('Indicazioni')}</a></div>`;
+const mapBox=(id,p)=>`<div style="position:relative"><div id="${id}" class="mm"></div><a class="ind" style="position:absolute;right:10px;bottom:10px;z-index:500" target="_blank" rel="noopener" href="${dir(p)}">${t('Indicazioni')}</a></div>`;
 
 /* Menu */
 function renderMenu(){
