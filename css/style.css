@@ -239,3 +239,14 @@ html.dark .stt{background:#1c3a25;color:#6CD98A}
 .shead{touch-action:none}
 .sheet{overscroll-behavior:contain}
 .gtr{touch-action:pan-x}
+
+/* ===== Tasti realistici: Chiama, Sito web, Indicazioni ===== */
+.obtn,.ind{position:relative;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation;
+  transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s ease,filter .15s ease;
+  box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.7)}
+html.dark .obtn{box-shadow:0 3px 8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+@media (hover:hover){
+  .obtn:hover,.ind:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.7)}
+}
+.obtn:active,.obtn.pressed,.ind:active,.ind.pressed{transform:scale(.94) translateY(1px);box-shadow:0 1px 2px rgba(0,0,0,.25),inset 0 2px 4px rgba(0,0,0,.18);filter:brightness(.93)}
+.obtn:focus-visible,.ind:focus-visible{outline:3px solid var(--pr2);outline-offset:2px}
