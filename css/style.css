@@ -235,6 +235,7 @@ html.dark .stt{background:#1c3a25;color:#6CD98A}
 .grab{display:flex;justify-content:center;padding:0 0 14px;margin-top:-4px;cursor:grab;touch-action:none}
 .grab i{width:42px;height:5px;border-radius:3px;background:var(--bd)}
 .grab:active{cursor:grabbing}
-@media (min-width:768px){.grab{display:none}}
+.grab{padding-top:4px}
+.shead{touch-action:none}
 .sheet{overscroll-behavior:contain}
 .gtr{touch-action:pan-x}
