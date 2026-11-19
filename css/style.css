@@ -241,7 +241,8 @@ html.dark .stt{background:#1c3a25;color:#6CD98A}
 .gtr{touch-action:pan-x}
 
 /* ===== Tasti realistici: Chiama, Sito web, Indicazioni ===== */
-.obtn,.ind{position:relative;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation;
+.obtn{position:relative}
+.obtn,.ind{cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation;
   transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s ease,filter .15s ease;
   box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.7)}
 html.dark .obtn{box-shadow:0 3px 8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
