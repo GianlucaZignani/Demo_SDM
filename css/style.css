@@ -270,3 +270,20 @@ html.dark .stt.no{background:#43201d;color:#FF8A80}
 .hr+.hr{margin-top:2px}
 .hr.today{background:rgba(10,132,255,.12);font-weight:700;color:var(--pr)}
 .hr em{font-style:normal;font-size:10px;font-weight:700;background:var(--pr2);color:#fff;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+
+/* Contatti su schermi grandi: griglia ordinata, righe di schede uguali */
+.mw{position:relative}
+@media (min-width:960px){
+ .cgrid{grid-template-columns:1fr 1fr;align-items:stretch;gap:20px}
+ .cgrid>.sx{order:9;grid-column:1/-1}
+ .cs{display:flex;flex-direction:column;min-width:0}
+ .cs>.sech{margin-top:0}
+ .cs>.card{flex:1;display:flex;flex-direction:column}
+ .cs>.card>.crow{flex:1}
+ .cs>.card>.crow .mi{height:100%;box-sizing:border-box}
+ .hrs{justify-content:space-between}.hrs .hr{flex:1;align-items:center}
+ .hero{display:flex;flex-direction:column;justify-content:center}
+ .mapc{display:flex;flex-direction:column}
+ .mapc .mw{flex:1;min-height:250px}
+ .mapc .mm{position:absolute;inset:0;height:auto}
+}
