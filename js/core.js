@@ -28,13 +28,16 @@ function renderMenu(){
   const it=[['Vivere la città','events','fa-map'],['Servizi','services','fa-table-cells-large'],['Pagamenti online','pay','fa-credit-card'],['Amministrazione','admin','fa-building-columns'],['Contatti','contacts','fa-phone'],['Segnalazioni','report','fa-triangle-exclamation']];
   $('#menu').innerHTML=it.map(x=>`<button class="mi" onclick="go('${x[1]}')"><i class="fa-solid ${x[2]}"></i>${t(x[0])}</button>`).join('');
 }
-function render(){
+const errCard=m=>`<div class="card" style="margin:20px;text-align:center"><b>Si è verificato un errore</b><p class="mut" style="font-size:13px;margin:8px 0 0">${esc(m)}<br>Controlla che tutti i file siano stati caricati e ricarica la pagina.</p></div>`;
+function render(){try{_render()}catch(err){console.error(err);const A=$('#app');A.className='main';A.innerHTML=errCard(err.message)}}
+function _render(){
   badge();renderMenu();
   mms.forEach(m=>m.remove());mms=[];
   if(map&&view!=='home'){map.remove();map=null}
   const A=$('#app');A.className=view==='home'?'':'main'+(['notif','events','services','admin','orgs'].includes(view)?' wide':'');A.innerHTML='';
-  try{({home,notif,notifD,events,eventD,services,serviceD,admin,orgs,sindaco,contacts,report,login,account,pay}[view]||home)(A)}
-  catch(err){console.error(err);A.innerHTML=`<div class="card" style="margin:20px;text-align:center"><b>Si è verificato un errore</b><p class="mut" style="font-size:13px;margin:8px 0 0">${esc(err.message)}<br>Controlla che tutti i file siano stati caricati e ricarica la pagina.</p></div>`}
+  const fn=window[view];
+  try{if(typeof fn!=='function')throw new Error('Schermata "'+view+'" non disponibile: il suo file non è stato caricato o è danneggiato.');fn(A)}
+  catch(err){console.error(err);A.innerHTML=errCard(err.message)}
   enhance();
   if(document.documentElement.dataset.nav==='fade'&&$('#lst')){A.classList.add('stagger');setTimeout(()=>A.classList.remove('stagger'),900)}
 }
