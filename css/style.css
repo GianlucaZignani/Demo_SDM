@@ -304,3 +304,6 @@ html.dark .stt.no{background:#43201d;color:#FF8A80}
 .rev{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;transition:grid-template-rows .35s cubic-bezier(.32,.72,0,1),opacity .25s ease,visibility 0s .35s}
 .rev.open{grid-template-rows:1fr;opacity:1;visibility:visible;transition:grid-template-rows .35s cubic-bezier(.32,.72,0,1),opacity .3s ease .05s,visibility 0s}
 .rev>div{overflow:hidden;min-height:0;padding:0 3px 3px}
+
+/* Carosello eventi/notizie: la prima card parte allineata al titolo, non al bordo della scheda */
+.hs{scroll-padding-left:20px;scroll-padding-right:20px}
