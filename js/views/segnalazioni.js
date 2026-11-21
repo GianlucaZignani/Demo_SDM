@@ -1,7 +1,7 @@
 /* Schermata Segnalazioni (modulo a 4 step, nello stile dell'app) */
 /* ============ SEGNALAZIONI ============ */
 const REPICON={'Manto stradale e buche':'fa-road','Segnaletica danneggiata':'fa-sign-hanging','Illuminazione pubblica':'fa-lightbulb','Rifiuti e pulizia urbana':'fa-trash-can','Verde pubblico':'fa-tree','Altro':'fa-ellipsis'};
-const R0=()=>({cat:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[],pv:[],name:'',email:'',tel:''});
+const R0=()=>({cat:'',other:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[],pv:[],name:'',email:'',tel:''});
 let R=R0();
 const stepH=(n,ti,sub)=>`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><span class="sn">${n}</span><div style="min-width:0"><b class="pr" style="font-size:16px">${ti}</b>${sub?`<div class="mut" style="font-size:12px;margin-top:1px">${sub}</div>`:''}</div></div>`;
 function report(A){
@@ -10,7 +10,8 @@ function report(A){
   <p class="mut" style="text-align:center;font-size:14px;margin:0 0 18px">Segnala un problema alla città: bastano pochi minuti.</p>
   <div style="display:flex;flex-direction:column;gap:16px">
   <section class="card">${stepH(1,'Cosa stai segnalando?')}
-    <div class="tiles" id="rc">${CAT_REP.map(c=>`<button type="button" class="tile${R.cat===c?' on':''}" data-c="${esc(c)}" onclick="pickCat(this)"><i class="fa-solid ${REPICON[c]||'fa-circle'}"></i><span>${c}</span></button>`).join('')}</div></section>
+    <div class="tiles" id="rc">${CAT_REP.map(c=>`<button type="button" class="tile${R.cat===c?' on':''}" data-c="${esc(c)}" onclick="pickCat(this)"><i class="fa-solid ${REPICON[c]||'fa-circle'}"></i><span>${c}</span></button>`).join('')}</div>
+    <div class="rev${R.cat==='Altro'?' open':''}" id="rw"><div><div style="font-size:13px;font-weight:600;margin:14px 0 6px">Specifica cosa vuoi segnalare</div><input id="ro" class="fi" maxlength="80" placeholder="Es. fontana rotta, panchina danneggiata…" value="${esc(R.other)}" oninput="R.other=this.value;this.classList.remove('err')"></div></div></section>
   <section class="card">${stepH(2,'Dove si trova il problema?','Tocca la mappa per spostare il segnaposto')}
     <div id="mm" class="mm" style="border-radius:16px;margin-bottom:10px"></div>
     <input id="ra" class="fi" placeholder="Via e numero civico" value="${esc(R.addr)}" oninput="R.addr=this.value;this.classList.remove('err')">
@@ -26,7 +27,7 @@ function report(A){
     <input id="re" type="email" class="fi" style="margin-top:10px" placeholder="Email" value="${esc(R.email)}" oninput="R.email=this.value;this.classList.remove('err')">
     <input id="rt" type="tel" class="fi" style="margin-top:10px" placeholder="Telefono (facoltativo)" value="${esc(R.tel)}" oninput="R.tel=this.value"></section>
   <button class="btn" style="width:100%;font-weight:700" onclick="sendR()"><i class="fa-solid fa-paper-plane"></i> INVIA SEGNALAZIONE UFFICIALE</button></div>
-  ${S.reports.length?`<h2 class="sech" id="mine">LE TUE SEGNALAZIONI</h2><div style="display:flex;flex-direction:column;gap:10px">`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:12px 14px;display:flex;gap:12px;align-items:center"><span class="ic" style="background:#0A84FF"><i class="fa-solid ${REPICON[r.cat]||'fa-circle'}"></i></span><div style="flex:1;min-width:0"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div class="mut" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.cat)} · ${esc(r.sub)}</div></div><span class="stt">Presa in carico</span></div>`).join('')+`</div>`:''}`;
+  ${S.reports.length?`<h2 class="sech" id="mine">LE TUE SEGNALAZIONI</h2><div style="display:flex;flex-direction:column;gap:10px">`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:12px 14px;display:flex;gap:12px;align-items:center"><span class="ic" style="background:#0A84FF"><i class="fa-solid ${REPICON[r.cat]||'fa-circle'}"></i></span><div style="flex:1;min-width:0"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div class="mut" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.cat==='Altro'&&r.other?'Altro: '+r.other:r.cat)} · ${esc(r.sub)}</div></div><span class="stt">Presa in carico</span></div>`).join('')+`</div>`:''}`;
   const m=miniMap('mm',R.pos||[45.4108,9.2736]);
   m.on('click',e=>{R.pos=[e.latlng.lat,e.latlng.lng];R.gps=false;$('#rg').checked=false;m._mk.setLatLng(e.latlng);$('#ra').classList.remove('err')});
   window._rm=m;fl();
@@ -35,6 +36,8 @@ function pickCat(el){
   R.cat=el.dataset.c;
   document.querySelectorAll('#rc .tile').forEach(b=>b.classList.toggle('on',b===el));
   $('#rc').classList.remove('err');
+  const alt=R.cat==='Altro';$('#rw').classList.toggle('open',alt);
+  if(alt)setTimeout(()=>$('#ro').focus(),350);
 }
 function useGps(on){
   R.gps=on;if(!on)return;
@@ -61,10 +64,10 @@ function fl(){
 function sendR(){
   document.querySelectorAll('.err').forEach(e=>e.classList.remove('err'));
   const bad=[];
-  if(!R.cat)bad.push('rc');if(!R.addr.trim()&&!R.gps&&!R.pos)bad.push('ra');if(!R.sub.trim())bad.push('rs');if(!R.desc.trim())bad.push('rd');if(!R.name.trim())bad.push('rn');if(!/^\S+@\S+\.\S+$/.test(R.email))bad.push('re');
+  if(!R.cat)bad.push('rc');if(R.cat==='Altro'&&!R.other.trim())bad.push('ro');if(!R.addr.trim()&&!R.gps&&!R.pos)bad.push('ra');if(!R.sub.trim())bad.push('rs');if(!R.desc.trim())bad.push('rd');if(!R.name.trim())bad.push('rn');if(!/^\S+@\S+\.\S+$/.test(R.email))bad.push('re');
   if(bad.length){bad.forEach(i=>$('#'+i).classList.add('err'));$('#'+bad[0]).scrollIntoView({behavior:'smooth',block:'center'});toast('Compila i campi evidenziati');return}
   const code='#SDM-2026-'+String(Math.floor(1000+Math.random()*9000));
-  S.reports.push({code,cat:R.cat,sub:R.sub,desc:R.desc,addr:R.addr,pos:R.pos,files:R.files,name:R.name,email:R.email,tel:R.tel,date:new Date().toLocaleDateString('it-IT')});save();
+  S.reports.push({code,cat:R.cat,other:R.cat==='Altro'?R.other.trim():'',sub:R.sub,desc:R.desc,addr:R.addr,pos:R.pos,files:R.files,name:R.name,email:R.email,tel:R.tel,date:new Date().toLocaleDateString('it-IT')});save();
   R.pv.forEach(u=>URL.revokeObjectURL(u));R=R0();
   mms.forEach(m=>m.remove());mms=[];
   $('#app').innerHTML=`<div class="card" style="padding:30px 20px;text-align:center;margin-top:10px"><div class="okc"><i class="fa-solid fa-check"></i></div><h1 class="t" style="margin-bottom:6px">Segnalazione inviata</h1><p class="mut" style="line-height:1.5;margin:0;font-size:14px">Il Comune ha preso in carico la tua pratica.<br>Conserva il codice per seguirne lo stato.</p><div class="tk">${code}</div>
