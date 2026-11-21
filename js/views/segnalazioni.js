@@ -27,7 +27,7 @@ function report(A){
     <input id="re" type="email" class="fi" style="margin-top:10px" placeholder="Email" value="${esc(R.email)}" oninput="R.email=this.value;this.classList.remove('err')">
     <input id="rt" type="tel" class="fi" style="margin-top:10px" placeholder="Telefono (facoltativo)" value="${esc(R.tel)}" oninput="R.tel=this.value"></section>
   <button class="btn" style="width:100%;font-weight:700" onclick="sendR()"><i class="fa-solid fa-paper-plane"></i> INVIA SEGNALAZIONE UFFICIALE</button></div>
-  ${S.reports.length?`<h2 class="sech" id="mine">LE TUE SEGNALAZIONI</h2><div style="display:flex;flex-direction:column;gap:10px">`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:12px 14px;display:flex;gap:12px;align-items:center"><span class="ic" style="background:#0A84FF"><i class="fa-solid ${REPICON[r.cat]||'fa-circle'}"></i></span><div style="flex:1;min-width:0"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div class="mut" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.cat==='Altro'&&r.other?'Altro: '+r.other:r.cat)} · ${esc(r.sub)}</div></div><span class="stt">Presa in carico</span></div>`).join('')+`</div>`:''}`;
+  ${S.reports.length?`<h2 class="sech" id="mine">LE TUE SEGNALAZIONI</h2><div style="display:flex;flex-direction:column;gap:10px">`+S.reports.slice().reverse().map(r=>`<div class="card" style="padding:12px 14px;display:flex;gap:12px;align-items:center"><span class="ic" style="background:#0A84FF"><i class="fa-solid ${REPICON[r.cat]||'fa-circle'}"></i></span><div style="flex:1;min-width:0"><b>${r.code}</b> <span class="mut" style="font-size:12px">${r.date}</span><div class="mut" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.cat==='Altro'&&r.other?tr('Altro')+': '+r.other:tr(r.cat))} · ${esc(r.sub)}</div></div><span class="stt">Presa in carico</span></div>`).join('')+`</div>`:''}`;
   const m=miniMap('mm',R.pos||[45.4108,9.2736]);
   m.on('click',e=>{R.pos=[e.latlng.lat,e.latlng.lng];R.gps=false;$('#rg').checked=false;m._mk.setLatLng(e.latlng);$('#ra').classList.remove('err')});
   window._rm=m;fl();
@@ -37,7 +37,7 @@ function pickCat(el){
   document.querySelectorAll('#rc .tile').forEach(b=>b.classList.toggle('on',b===el));
   $('#rc').classList.remove('err');
   const alt=R.cat==='Altro';$('#rw').classList.toggle('open',alt);
-  if(alt)setTimeout(()=>$('#ro').focus(),350);
+  if(alt)setTimeout(()=>{const ro=$('#ro');if(ro)ro.focus()},350);
 }
 function useGps(on){
   R.gps=on;if(!on)return;
@@ -67,7 +67,7 @@ function sendR(){
   if(!R.cat)bad.push('rc');if(R.cat==='Altro'&&!R.other.trim())bad.push('ro');if(!R.addr.trim()&&!R.gps&&!R.pos)bad.push('ra');if(!R.sub.trim())bad.push('rs');if(!R.desc.trim())bad.push('rd');if(!R.name.trim())bad.push('rn');if(!/^\S+@\S+\.\S+$/.test(R.email))bad.push('re');
   if(bad.length){bad.forEach(i=>$('#'+i).classList.add('err'));$('#'+bad[0]).scrollIntoView({behavior:'smooth',block:'center'});toast('Compila i campi evidenziati');return}
   const code='#SDM-2026-'+String(Math.floor(1000+Math.random()*9000));
-  S.reports.push({code,cat:R.cat,other:R.cat==='Altro'?R.other.trim():'',sub:R.sub,desc:R.desc,addr:R.addr,pos:R.pos,files:R.files,name:R.name,email:R.email,tel:R.tel,date:new Date().toLocaleDateString('it-IT')});save();
+  S.reports.push({code,cat:R.cat,other:R.cat==='Altro'?R.other.trim():'',sub:R.sub,desc:R.desc,addr:R.addr,pos:R.pos,files:R.files,name:R.name,email:R.email,tel:R.tel,date:new Date().toLocaleDateString(S.lang==='en'?'en-GB':'it-IT')});save();
   R.pv.forEach(u=>URL.revokeObjectURL(u));R=R0();
   mms.forEach(m=>m.remove());mms=[];
   $('#app').innerHTML=`<div class="card" style="padding:30px 20px;text-align:center;margin-top:10px"><div class="okc"><i class="fa-solid fa-check"></i></div><h1 class="t" style="margin-bottom:6px">Segnalazione inviata</h1><p class="mut" style="line-height:1.5;margin:0;font-size:14px">Il Comune ha preso in carico la tua pratica.<br>Conserva il codice per seguirne lo stato.</p><div class="tk">${code}</div>
