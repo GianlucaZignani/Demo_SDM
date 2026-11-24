@@ -7,8 +7,12 @@ function listN(q){
 }
 function readN(id){if(!S.read.includes(id)){S.read.push(id);save()}go('notifD',id)}
 function notifD(A){
-  const n=NOTIF.find(x=>x.id===arg);
-  A.innerHTML=`${BACK(n.d)}<h1 class="t">${n.t}</h1>${n.b.map(x=>`<p style="font-size:14px;line-height:1.5;margin:0;padding:12px 0;border-top:1px solid var(--bd)">${x}</p>`).join('')}
-  <div style="border-top:1px solid var(--bd);padding-top:12px"><b style="font-size:14px">Luogo:</b><div style="margin:8px 0">${mapBox('mm',n.p)}</div><span style="font-size:13px">${n.pl}</span></div>`;
+  A.classList.add('dt');
+  const n=NOTIF.find(x=>x.id===arg),others=NOTIF.filter(x=>x.id!==n.id);
+  const hero=`<div class="card dhero">${im(IMG.notifiche+n.f,'width:100%;height:170px;object-fit:cover;display:block',n.i)}<div class="hb2"><span class="tg" style="background:#FF9500">Notizia</span><h1>${n.t}</h1><div class="meta"><span class="mt"><i class="fa-regular fa-calendar-days"></i>${n.d}</span><span class="mt"><i class="fa-solid fa-location-dot"></i>${n.pl}</span></div></div></div>`;
+  A.innerHTML=detailPage({hero,secs:[
+    {ic:'fa-file-lines',bg:'#FF9500',t:'Dettagli',html:n.b.map(x=>`<p style="margin:0 0 10px">${x}</p>`).join('')},
+    {ic:'fa-location-dot',bg:'#0A84FF',t:'Luogo',html:`<div style="margin-bottom:10px">${mapBox('mm',n.p)}</div><b>${n.pl}</b>`},
+    {ic:'fa-newspaper',bg:'#5856D6',t:'Altre notizie',html:`<div style="margin:0 -8px">${others.map(o=>`<div class="crow"><button type="button" class="mi" onclick="readN(${o.id})"><span class="ic" style="background:#FF9500"><i class="fa-solid ${o.i}"></i></span><span style="flex:1;min-width:0"><b style="font-size:14px">${o.t}</b><span class="mut" style="display:block;font-size:12px">${o.d}</span></span><i class="fa-solid fa-chevron-right mut"></i></button></div>`).join('')}</div>`}]});
   miniMap('mm',n.p);badge();
 }
