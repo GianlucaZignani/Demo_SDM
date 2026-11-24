@@ -9,7 +9,7 @@ function readN(id){if(!S.read.includes(id)){S.read.push(id);save()}go('notifD',i
 function notifD(A){
   A.classList.add('dt');
   const n=NOTIF.find(x=>x.id===arg),others=NOTIF.filter(x=>x.id!==n.id);
-  const hero=`<div class="card dhero">${im(IMG.notifiche+n.f,'width:100%;height:170px;object-fit:cover;display:block',n.i)}<div class="hb2"><span class="tg" style="background:#FF9500">Notizia</span><h1>${n.t}</h1><div class="meta"><span class="mt"><i class="fa-regular fa-calendar-days"></i>${n.d}</span><span class="mt"><i class="fa-solid fa-location-dot"></i>${n.pl}</span></div></div></div>`;
+  const hero=`<div class="card dhero"><div class="hb2"><span class="tg" style="background:#FF9500">Notizia</span><h1>${n.t}</h1><div class="meta"><span class="mt"><i class="fa-regular fa-calendar-days"></i>${n.d}</span><span class="mt"><i class="fa-solid fa-location-dot"></i>${n.pl}</span></div></div></div>`;
   A.innerHTML=detailPage({hero,secs:[
     {ic:'fa-file-lines',bg:'#FF9500',t:'Dettagli',html:n.b.map(x=>`<p style="margin:0 0 10px">${x}</p>`).join('')},
     {ic:'fa-location-dot',bg:'#0A84FF',t:'Luogo',html:`<div style="margin-bottom:10px">${mapBox('mm',n.p)}</div><b>${n.pl}</b>`},
