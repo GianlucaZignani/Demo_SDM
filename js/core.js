@@ -57,10 +57,10 @@ function transition(dir,fn){
 
 /* ===== Pagine di dettaglio: scheda iniziale, indice delle sezioni e sezioni a schede ===== */
 function detailPage(o){
-  const toc=o.secs.map((s,i)=>`<button type="button" class="tc${i?'':' on'}" data-t="ds${i}"><i class="fa-solid ${s.ic}"></i><span>${s.t}</span></button>`).join('');
+  const toc=o.secs.map((s,i)=>`<button type="button" class="tc${i?'':' on'}" data-t="ds${i}"><span>${s.t}</span></button>`).join('');
   return `${BACK(o.right||'')}${o.hero}
   <div class="dgrid"><aside class="tocw"><div class="toch">IN QUESTA PAGINA</div><nav class="toc" aria-label="Indice">${toc}</nav></aside>
-  <div class="dsecs">${o.secs.map((s,i)=>`<section class="card dsec" id="ds${i}"><div class="dst"><span class="ic" style="background:${s.bg}"><i class="fa-solid ${s.ic}"></i></span><h2>${s.t}</h2></div><div class="dsb">${s.html}</div></section>`).join('')}</div></div>`;
+  <div class="dsecs">${o.secs.map((s,i)=>`<section class="card dsec" id="ds${i}"><div class="dst"><h2>${s.t}</h2></div><div class="dsb">${s.html}</div></section>`).join('')}</div></div>`;
 }
 let tocLock=0,tocBusy=false;
 function tocSet(c){
