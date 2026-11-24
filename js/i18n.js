@@ -10,7 +10,7 @@ const D={
 'Nessun evento o notizia per questo luogo al momento.':'No events or news for this place at the moment.','Apri le foto del luogo':'Open the photos of this place','Chiudi':'Close','Nessuna foto disponibile':'No photo available','Foto precedente':'Previous photo','Foto successiva':'Next photo',
 'Orari':'Hours','Consulta il sito del locale':'See the venue website',
 /* notifiche, eventi, servizi */
-'Cerca una notifica...':'Search a notification...','Non letta':'Unread','Luogo:':'Place:','Nessun risultato. Prova con altre parole chiave.':'No results. Try other keywords.',
+'IN QUESTA PAGINA':'ON THIS PAGE','Indice':'Index','Dettagli':'Details','Altre notizie':'Other news','Altri eventi':'Other events','Biografia':'Biography','Incarico':'Office','Telefono':'Phone','Cerca una notifica...':'Search a notification...','Non letta':'Unread','Luogo:':'Place:','Nessun risultato. Prova con altre parole chiave.':'No results. Try other keywords.',
 'Cerca un evento in città...':'Search an event...','Data e orari':'Dates and times','Luogo':'Place',"Cos'è":'What it is','Costo':'Cost','Ingresso gratuito':'Free admission',
 'Cerca un servizio...':'Search a service...','Accedi al servizio':'Go to the service','A chi è rivolto':'Who it is for','Descrizione':'Description','Link utili':'Useful links','Cosa fare':'What to do',
 'Ministero degli Affari Esteri':'Ministry of Foreign Affairs','Servizi Consolari Fast It':'Fast It Consular Services','Portale SUE':'SUE Portal','Regione Lombardia':'Lombardy Region','Amministrazione trasparente':'Transparent administration',
