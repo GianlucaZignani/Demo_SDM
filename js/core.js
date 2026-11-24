@@ -42,15 +42,45 @@ function _render(){
   if(document.documentElement.dataset.nav==='fade'&&$('#lst')){A.classList.add('stagger');setTimeout(()=>A.classList.remove('stagger'),900)}
 }
 
-function enhance(){document.querySelectorAll('#lst>*').forEach((c,i)=>c.style.setProperty('--i',Math.min(i,8)));document.querySelectorAll('.card[onclick]').forEach(c=>{c.setAttribute('role','button');c.tabIndex=0})}
+function enhance(){document.querySelectorAll('#lst>*').forEach((c,i)=>c.style.setProperty('--i',Math.min(i,8)));document.querySelectorAll('.card[onclick]').forEach(c=>{c.setAttribute('role','button');c.tabIndex=0});initToc()}
 
 /* Transizioni tra schermate stile iOS: push (fwd), pop (back), dissolvenza (fade).
    Usa la View Transitions API; dove non esiste ripiega su una semplice animazione CSS. */
 const DETAIL=['notifD','eventD','serviceD','orgs','sindaco'];
-const REDUCED=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+const REDUCED=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 function transition(dir,fn){
   document.documentElement.dataset.nav=dir;
   if(document.startViewTransition&&!REDUCED()){document.startViewTransition(fn);return}
   fn();
   if(!REDUCED())$('#app').classList.add('in-'+(view==='home'?'fade-o':dir));
 }
+
+/* ===== Pagine di dettaglio: scheda iniziale, indice delle sezioni e sezioni a schede ===== */
+function detailPage(o){
+  const toc=o.secs.map((s,i)=>`<button type="button" class="tc${i?'':' on'}" data-t="ds${i}"><i class="fa-solid ${s.ic}"></i><span>${s.t}</span></button>`).join('');
+  return `${BACK(o.right||'')}${o.hero}
+  <div class="dgrid"><aside class="tocw"><div class="toch">IN QUESTA PAGINA</div><nav class="toc" aria-label="Indice">${toc}</nav></aside>
+  <div class="dsecs">${o.secs.map((s,i)=>`<section class="card dsec" id="ds${i}"><div class="dst"><span class="ic" style="background:${s.bg}"><i class="fa-solid ${s.ic}"></i></span><h2>${s.t}</h2></div><div class="dsb">${s.html}</div></section>`).join('')}</div></div>`;
+}
+let tocLock=0,tocBusy=false;
+function tocSet(c){
+  document.querySelectorAll('.tc').forEach(x=>x.classList.toggle('on',x===c));
+  const nav=c.parentNode;if(nav.scrollWidth>nav.clientWidth&&nav.scrollTo)nav.scrollTo({left:c.offsetLeft-20,behavior:'smooth'});
+}
+function initToc(){
+  document.querySelectorAll('.tc').forEach(c=>{c.onclick=()=>{
+    const el=document.getElementById(c.dataset.t);if(!el)return;
+    tocLock=Date.now()+800;tocSet(c);el.scrollIntoView({behavior:REDUCED()?'auto':'smooth',block:'start'});
+  }});
+}
+/* l'indice evidenzia la sezione che si sta leggendo */
+window.addEventListener('scroll',()=>{
+  if(tocBusy||Date.now()<tocLock)return;tocBusy=true;
+  requestAnimationFrame(()=>{
+    tocBusy=false;const secs=document.querySelectorAll('.dsec');if(!secs.length)return;
+    const lim=innerWidth<960?170:120;let cur=0;
+    secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<=lim)cur=i});
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)cur=secs.length-1;
+    const c=document.querySelectorAll('.tc')[cur];if(c&&!c.classList.contains('on'))tocSet(c);
+  });
+},{passive:true});
