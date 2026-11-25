@@ -8,7 +8,7 @@ function listS(q){
 function serviceD(A){
   A.classList.add('dt');
   const s=SERV.find(x=>x.id===arg);
-  const hero=`<div class="card dhero" style="padding:22px 16px;text-align:center"><span class="ic" style="width:56px;height:56px;border-radius:18px;margin:0 auto 12px;background:linear-gradient(135deg,#1F6FB5,#0A84FF);font-size:24px"><i class="fa-solid fa-file-lines"></i></span><h1 style="margin:0 0 8px">${s.t}</h1><p style="font-size:14px;line-height:1.5;margin:0 0 16px">${s.s}</p><button type="button" class="btn" onclick="toast('Reindirizzamento al portale dei servizi online...')">Accedi al servizio</button></div>`;
+  const hero=`<div class="card dhero" style="padding:22px 16px;text-align:center"><h1 style="margin:0 0 8px">${s.t}</h1><p style="font-size:14px;line-height:1.5;margin:0 0 16px">${s.s}</p><button type="button" class="btn" onclick="toast('Reindirizzamento al portale dei servizi online...')">Accedi al servizio</button></div>`;
   A.innerHTML=detailPage({hero,secs:[
     {ic:'fa-users',bg:'#0A84FF',t:'A chi è rivolto',html:s.to},
     {ic:'fa-align-left',bg:'#34C759',t:'Descrizione',html:s.d},
