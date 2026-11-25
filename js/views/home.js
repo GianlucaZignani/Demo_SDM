@@ -1,11 +1,11 @@
 /* Schermata Home: mappa, filtro, scheda luogo */
 /* ============ HOME ============ */
-let F='Tutto',Q='',markers=[],me=null,cl=null,selM=null;
+let FS=new Set(),Q='',markers=[],me=null,cl=null,selM=null;
 const CAT_ICON={'Istruzione':'fa-graduation-cap','Sanità e assistenza':'fa-kit-medical','Servizi':'fa-building-columns','Sicurezza':'fa-shield-halved','Verde e svago':'fa-tree','Servizi urbani':'fa-city','Ristoranti':'fa-utensils','Hotel':'fa-bed'};
 function home(A){
   A.innerHTML=`<div class="mapwrap"><div id="map" style="position:absolute;inset:0"></div>
   <div class="mpanel"><div style="display:flex;gap:10px;align-items:center">
-  <button onclick="$('#fp').classList.toggle('hidden')" style="background:none;border:0;color:var(--tx);display:flex;flex-direction:column;align-items:center;font-size:11px;cursor:pointer"><i class="fa-solid fa-filter" style="font-size:22px"></i>${t('Filtro')}</button>
+  <button onclick="$('#fp').classList.toggle('hidden')" style="position:relative;background:none;border:0;color:var(--tx);display:flex;flex-direction:column;align-items:center;font-size:11px;cursor:pointer"><i class="fa-solid fa-filter" style="font-size:22px"></i>${t('Filtro')}<span class="bdg" id="fcnt" style="top:-5px;right:-3px;background:var(--pr2);display:none"></span></button>
   <div class="sr"><input id="q" value="${esc(Q)}" placeholder="${t('Cerca i luoghi vicini a te...')}" oninput="Q=this.value;mark()"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>
   <div id="fp" class="hidden" style="position:absolute;left:14px;top:84px;width:210px;background:var(--card);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.35);max-height:55vh;overflow:auto"></div></div>
   <button onclick="locate()" aria-label="La mia posizione" style="position:absolute;right:14px;bottom:24px;z-index:900;width:46px;height:46px;border-radius:50%;border:0;background:var(--card);color:var(--pr2);font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer"><i class="fa-solid fa-location-arrow"></i></button></div>`;
@@ -25,7 +25,16 @@ function locate(){
 }
 function filt(){
   const all=['Tutto',...Object.keys(CATS)];
-  $('#fp').innerHTML=all.map(c=>`<button class="mi" style="font-weight:${F===c?700:400}" onclick="F='${c}';filt();mark();$('#fp').classList.add('hidden')"><span style="width:14px;height:14px;border-radius:50%;background:${CATS[c]||'#C7C7CC'};border:2px solid #333;flex:none"></span><span style="flex:1;text-align:center">${c}</span></button>`).join('');
+  $('#fp').innerHTML=all.map(c=>{
+    const on=c==='Tutto'?FS.size===0:FS.has(c);
+    return `<button class="mi" style="font-weight:${on?700:400}" onclick="pickF('${c}')"><span style="flex:1">${c}</span><i class="fa-solid fa-check pr" style="visibility:${on?'visible':'hidden'}"></i></button>`;
+  }).join('');
+  const b=$('#fcnt');if(b){b.textContent=FS.size;b.style.display=FS.size?'grid':'none'}
+}
+/* "Tutto" azzera la selezione; le altre voci si accendono e si spengono e si possono combinare */
+function pickF(c){
+  if(c==='Tutto')FS.clear();else if(FS.has(c))FS.delete(c);else FS.add(c);
+  filt();mark();
 }
 function pinIcon(p){
   return L.divIcon({className:'',iconSize:[34,42],iconAnchor:[17,42],
@@ -34,7 +43,7 @@ function pinIcon(p){
 function mark(){
   cl.clearLayers();markers=[];
   const q=Q.toLowerCase();
-  const list=POIS.filter(p=>(F==='Tutto'||p.c===F)&&(p.n+p.c+p.a).toLowerCase().includes(q));
+  const list=POIS.filter(p=>(FS.size===0||FS.has(p.c))&&(p.n+p.c+p.a).toLowerCase().includes(q));
   list.forEach(p=>{
     const m=L.marker(p.p,{icon:pinIcon(p),title:p.n});
     m._poi=p;m._name=p.n;
@@ -42,7 +51,7 @@ function mark(){
     markers.push(m);cl.addLayer(m);
   });
   if(selM&&!markers.includes(selM))selM=null;
-  if(list.length&&(q||F!=='Tutto'))map.fitBounds(L.latLngBounds(list.map(p=>p.p)).pad(.5),{maxZoom:16});
+  if(list.length&&(q||FS.size))map.fitBounds(L.latLngBounds(list.map(p=>p.p)).pad(.5),{maxZoom:16});
   setTimeout(updateLabels,90);
 }
 /* Mostra il nome solo dove c'è spazio: nessuna sovrapposizione tra scritte e pin */
