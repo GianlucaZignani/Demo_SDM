@@ -5,7 +5,7 @@ const D={
 /* menu e intestazione */
 'Notifiche':'Notifications','Menù':'Menu','Vivere la città':'City life','Servizi':'Services','Pagamenti online':'Online payments','Amministrazione':'Administration','Contatti':'Contacts','Segnalazioni':'Reports','Indietro':'Back',
 /* mappa e scheda luogo */
-'Filtro':'Filter','Tutto':'All','Istruzione':'Education','Sanità e assistenza':'Health and care','Sicurezza':'Safety','Verde e svago':'Green spaces and leisure','Servizi urbani':'Urban services','Ristoranti':'Restaurants','Hotel':'Hotels',
+'Filtro':'Filter','Filtra per categoria':'Filter by category','Nessun luogo trovato':'No places found','Tutto':'All','Istruzione':'Education','Sanità e assistenza':'Health and care','Sicurezza':'Safety','Verde e svago':'Green spaces and leisure','Servizi urbani':'Urban services','Ristoranti':'Restaurants','Hotel':'Hotels',
 'Cerca i luoghi vicini a te...':'Search places near you...','La mia posizione':'My location','Chiama':'Call','Sito web':'Website','Orari:':'Hours:','Indirizzo:':'Address:','Indicazioni':'Directions','Eventi e notizie':'Events and news','Notizia':'News','Evento':'Event',
 'Nessun evento o notizia per questo luogo al momento.':'No events or news for this place at the moment.','Apri le foto del luogo':'Open the photos of this place','Chiudi':'Close','Nessuna foto disponibile':'No photo available','Foto precedente':'Previous photo','Foto successiva':'Next photo',
 'Orari':'Hours','Consulta il sito del locale':'See the venue website',
@@ -68,6 +68,7 @@ function trText(s){
   const k=s.trim().replace(/\s+/g,' ');
   if(Object.prototype.hasOwnProperty.call(D,k))return D[k];
   let o=k,ch=false;
+  const m0=k.match(/^Mostra (\d+) (luogo|luoghi)$/);if(m0)return 'Show '+m0[1]+(m0[1]==='1'?' place':' places');
   const m1=k.match(/^Foto di (.+)$/);if(m1)return 'Photos of '+m1[1];
   const m2=k.match(/^Foto (\d+) di (\d+)$/);if(m2)return 'Photo '+m2[1]+' of '+m2[2];
   o=o.replace(/^(\d{1,2}) (gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre) (\d{4})$/,(m,d,mo,y)=>{ch=true;return MONTHS[mo]+' '+d+', '+y});
