@@ -356,3 +356,11 @@ html.dark .stt.no{background:#43201d;color:#FF8A80}
 .fchip:active{transform:scale(.94)}
 @media (hover:hover){.fchip:not(.on):hover{border-color:var(--pr2);transform:translateY(-1px)}}
 .ffoot{margin-top:16px}
+
+/* Filtro: "Tutto" in alto, riga di divisione, categorie incolonnate tutte della stessa larghezza */
+.fpn{padding:14px}
+@media (min-width:768px){.fpn{width:300px}}
+.fpn .fchip{width:100%;box-sizing:border-box;justify-content:flex-start;border-radius:14px;padding:11px 14px}
+.fpn .fchip i{width:18px;text-align:center}
+.fcol{display:flex;flex-direction:column;gap:8px}
+.fdiv{height:2px;border-radius:1px;background:var(--bd);margin:12px 2px}
