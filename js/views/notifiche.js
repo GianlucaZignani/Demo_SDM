@@ -1,17 +1,18 @@
-/* Schermate Servizi (lista + dettaglio) */
-/* ============ SERVIZI ============ */
-function services(A){A.innerHTML=`${SEARCH('Cerca un servizio...','listS')}<div id="lst" style="display:flex;flex-direction:column;gap:18px"></div>`;listS('')}
-function listS(q){
-  q=q.toLowerCase();const l=SERV.filter(s=>(s.t+s.s).toLowerCase().includes(q));
-  $('#lst').innerHTML=l.length?l.map(s=>`<div class="card" onclick="go('serviceD',${s.id})" style="cursor:pointer;text-align:center"><h2 class="pr" style="font-weight:700;font-size:18px;margin:0 0 8px">${s.t}</h2><p style="font-size:13px;margin:0;line-height:1.4">${s.s}</p></div>`).join(''):NOTH;
+/* Schermate Notifiche (lista + dettaglio) */
+/* ============ NOTIFICHE ============ */
+function notif(A){A.innerHTML=`${SEARCH('Cerca una notifica...','listN')}<div id="lst" style="display:flex;flex-direction:column;gap:22px"></div>`;listN('')}
+function listN(q){
+  q=q.toLowerCase();const l=NOTIF.filter(n=>(n.t+n.e).toLowerCase().includes(q));
+  $('#lst').innerHTML=l.length?l.map(n=>`<div class="card" onclick="readN(${n.id})" style="cursor:pointer">${S.read.includes(n.id)?'':`<span class="chip">${t('Non letta')}</span>`}<h2 class="pr" style="font-weight:700;font-size:18px;text-align:center;margin:0 0 10px">${n.t}</h2><div style="display:flex;gap:12px;align-items:center">${im(IMG.notifiche+n.f,'width:100px;height:80px;object-fit:cover;border-radius:4px;flex:none',n.i)}<p style="font-size:13px;margin:0;text-align:center;line-height:1.4">${n.e}</p></div></div>`).join(''):NOTH;
 }
-function serviceD(A){
+function readN(id){if(!S.read.includes(id)){S.read.push(id);save()}go('notifD',id)}
+function notifD(A){
   A.classList.add('dt');
-  const s=SERV.find(x=>x.id===arg);
-  const hero=`<div class="card dhero" style="padding:22px 16px;text-align:center"><h1 style="margin:0 0 8px">${s.t}</h1><p style="font-size:14px;line-height:1.5;margin:0 0 16px">${s.s}</p><button type="button" class="btn" onclick="toast('Reindirizzamento al portale dei servizi online...')">Accedi al servizio</button></div>`;
+  const n=NOTIF.find(x=>x.id===arg),others=NOTIF.filter(x=>x.id!==n.id);
+  const hero=`<div class="card dhero"><div class="hb2"><span class="tg" style="background:#FF9500">Notizia</span><h1>${n.t}</h1><div class="meta"><span class="mt"><i class="fa-regular fa-calendar-days"></i>${n.d}</span><span class="mt"><i class="fa-solid fa-location-dot"></i>${n.pl}</span></div></div></div>`;
   A.innerHTML=detailPage({hero,secs:[
-    {ic:'fa-users',bg:'#0A84FF',t:'A chi è rivolto',html:s.to},
-    {ic:'fa-align-left',bg:'#34C759',t:'Descrizione',html:s.d},
-    {ic:'fa-link',bg:'#5856D6',t:'Link utili',html:`<div style="margin:0 -8px">${s.l.map(x=>`<div class="crow"><a class="mi" href="https://www.comune.sandonatomilanese.mi.it" target="_blank" rel="noopener"><span style="flex:1;min-width:0"><b style="font-size:14px">${x}</b></span><i class="fa-solid fa-arrow-up-right-from-square pr"></i></a></div>`).join('')}</div>`},
-    {ic:'fa-list-check',bg:'#FF9500',t:'Cosa fare',html:s.f}]});
+    {ic:'fa-file-lines',bg:'#FF9500',t:'Dettagli',html:n.b.map(x=>`<p style="margin:0 0 10px">${x}</p>`).join('')},
+    {ic:'fa-location-dot',bg:'#0A84FF',t:'Luogo',html:`<div style="margin-bottom:10px">${mapBox('mm',n.p)}</div><b>${n.pl}</b>`},
+    {ic:'fa-newspaper',bg:'#5856D6',t:'Altre notizie',html:`<div style="margin:0 -8px">${others.map(o=>`<div class="crow"><button type="button" class="mi" onclick="readN(${o.id})"><span class="ic" style="background:#FF9500"><i class="fa-solid ${o.i}"></i></span><span style="flex:1;min-width:0"><b style="font-size:14px">${o.t}</b><span class="mut" style="display:block;font-size:12px">${o.d}</span></span><i class="fa-solid fa-chevron-right mut"></i></button></div>`).join('')}</div>`}]});
+  miniMap('mm',n.p);badge();
 }
