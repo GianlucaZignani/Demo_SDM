@@ -7,7 +7,7 @@ function home(A){
   <div class="mpanel"><div style="display:flex;gap:10px;align-items:center">
   <button onclick="$('#fp').classList.toggle('hidden')" style="position:relative;background:none;border:0;color:var(--tx);display:flex;flex-direction:column;align-items:center;font-size:11px;cursor:pointer"><i class="fa-solid fa-filter" style="font-size:22px"></i>${t('Filtro')}<span class="bdg" id="fcnt" style="top:-5px;right:-3px;background:var(--pr2);display:none"></span></button>
   <div class="sr"><input id="q" value="${esc(Q)}" placeholder="${t('Cerca i luoghi vicini a te...')}" oninput="Q=this.value;mark()"><i class="fa-solid fa-magnifying-glass mut"></i></div></div>
-  <div id="fp" class="hidden" style="position:absolute;left:14px;top:84px;width:210px;background:var(--card);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.35);max-height:55vh;overflow:auto"></div></div>
+  <div id="fp" class="hidden fpn"></div></div>
   <button onclick="locate()" aria-label="La mia posizione" style="position:absolute;right:14px;bottom:24px;z-index:900;width:46px;height:46px;border-radius:50%;border:0;background:var(--card);color:var(--pr2);font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer"><i class="fa-solid fa-location-arrow"></i></button></div>`;
   map=L.map('map',{zoomControl:false,attributionControl:false,minZoom:11,maxZoom:19}).setView([45.4115,9.2715],14);
   L.control.zoom({position:'bottomright'}).addTo(map);
@@ -23,13 +23,19 @@ function locate(){
   if(!navigator.geolocation){toast('Geolocalizzazione non disponibile');return}
   navigator.geolocation.getCurrentPosition(p=>{const c=[p.coords.latitude,p.coords.longitude];me.setLatLng(c);map.setView(c,16)},()=>toast('Posizione non disponibile. Controlla i permessi.'));
 }
+const visList=()=>{const q=Q.toLowerCase();return POIS.filter(p=>(FS.size===0||FS.has(p.c))&&(p.n+p.c+p.a).toLowerCase().includes(q))};
 function filt(){
   const all=['Tutto',...Object.keys(CATS)];
-  $('#fp').innerHTML=all.map(c=>{
-    const on=c==='Tutto'?FS.size===0:FS.has(c);
-    return `<button class="mi" style="font-weight:${on?700:400}" onclick="pickF('${c}')"><span style="flex:1">${c}</span><i class="fa-solid fa-check pr" style="visibility:${on?'visible':'hidden'}"></i></button>`;
-  }).join('');
+  $('#fp').innerHTML=`<div class="fph">Filtra per categoria</div><div class="fch">${all.map(c=>{
+    const on=c==='Tutto'?FS.size===0:FS.has(c),ic=on?'fa-check':(c==='Tutto'?'fa-layer-group':CAT_ICON[c]);
+    return `<button type="button" class="fchip${on?' on':''}" onclick="pickF('${c}')"><i class="fa-solid ${ic}"></i>${c}</button>`}).join('')}</div>
+    <button type="button" class="btn ffoot" id="ffb" style="width:100%" onclick="$('#fp').classList.add('hidden')"></button>`;
   const b=$('#fcnt');if(b){b.textContent=FS.size;b.style.display=FS.size?'grid':'none'}
+  fcount();
+}
+function fcount(){
+  const b=$('#ffb');if(!b)return;const n=visList().length;
+  b.textContent=n?`Mostra ${n} ${n===1?'luogo':'luoghi'}`:'Nessun luogo trovato';
 }
 /* "Tutto" azzera la selezione; le altre voci si accendono e si spengono e si possono combinare */
 function pickF(c){
@@ -43,7 +49,7 @@ function pinIcon(p){
 function mark(){
   cl.clearLayers();markers=[];
   const q=Q.toLowerCase();
-  const list=POIS.filter(p=>(FS.size===0||FS.has(p.c))&&(p.n+p.c+p.a).toLowerCase().includes(q));
+  const list=visList();
   list.forEach(p=>{
     const m=L.marker(p.p,{icon:pinIcon(p),title:p.n});
     m._poi=p;m._name=p.n;
@@ -51,6 +57,7 @@ function mark(){
     markers.push(m);cl.addLayer(m);
   });
   if(selM&&!markers.includes(selM))selM=null;
+  fcount();
   if(list.length&&(q||FS.size))map.fitBounds(L.latLngBounds(list.map(p=>p.p)).pad(.5),{maxZoom:16});
   setTimeout(updateLabels,90);
 }
