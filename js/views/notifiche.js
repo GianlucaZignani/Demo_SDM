@@ -11,7 +11,7 @@ function notifD(A){
   const n=NOTIF.find(x=>x.id===arg),others=NOTIF.filter(x=>x.id!==n.id);
   const hero=`<div class="card dhero"><div class="hb2"><span class="tg" style="background:#FF9500">Notizia</span><h1>${n.t}</h1></div></div>`;
   A.innerHTML=detailPage({hero,secs:[
-    {ic:'fa-file-lines',bg:'#FF9500',t:'Dettagli',html:`<p class="mut" style="margin:0 0 10px;font-size:13px">${n.d}</p>`+n.b.map(x=>`<p style="margin:0 0 10px">${x}</p>`).join('')},
+    {ic:'fa-file-lines',bg:'#FF9500',t:'Dettagli',html:n.b.map(x=>`<p style="margin:0 0 10px">${x}</p>`).join('')},
     {ic:'fa-location-dot',bg:'#0A84FF',t:'Luogo',html:`<div style="margin-bottom:10px">${mapBox('mm',n.p)}</div><b>${n.pl}</b>`},
     {ic:'fa-newspaper',bg:'#5856D6',t:'Altre notizie',html:`<div style="margin:0 -8px">${others.map(o=>`<div class="crow"><button type="button" class="mi" onclick="readN(${o.id})"><span class="ic" style="background:#FF9500"><i class="fa-solid ${o.i}"></i></span><span style="flex:1;min-width:0"><b style="font-size:14px">${o.t}</b><span class="mut" style="display:block;font-size:12px">${o.d}</span></span><i class="fa-solid fa-chevron-right mut"></i></button></div>`).join('')}</div>`}]});
   miniMap('mm',n.p);badge();
