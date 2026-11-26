@@ -9,7 +9,7 @@ function eventD(A){
   A.classList.add('dt');
   const e=EVENTI.find(x=>x.id===arg),others=EVENTI.filter(x=>x.id!==e.id);
   const act=(ic,val,bl,bic,href)=>`<div class="crow" style="padding:8px 0;gap:10px"><span class="ic" style="background:#5856D6"><i class="fa-solid ${ic}"></i></span><span style="flex:1;min-width:0;word-break:break-word"><b style="font-size:14px">${val}</b></span><a class="obtn" style="flex:none;width:104px;box-sizing:border-box;padding:9px 0;font-size:13px" href="${href}"><i class="fa-solid ${bic}"></i>${bl}</a></div>`;
-  const hero=`<div class="card dhero"><div class="hb2"><span class="tg" style="background:#34C759">Evento</span><h1>${e.t}</h1><p style="font-size:14px;margin:0">${e.s}</p><div class="meta"><span class="mt"><i class="fa-regular fa-calendar-days"></i>${e.d}</span><span class="mt"><i class="fa-solid fa-location-dot"></i>${e.a}</span></div></div></div>`;
+  const hero=`<div class="card dhero"><div class="hb2"><span class="tg" style="background:#34C759">Evento</span><h1>${e.t}</h1><p style="font-size:14px;margin:0">${e.s}</p></div></div>`;
   const secs=[
     {ic:'fa-calendar-days',bg:'#34C759',t:'Data e orari',html:e.dd.map((x,i)=>`<p style="margin:0 0 6px;${i?'':'font-weight:700'}">${x}</p>`).join('')},
     {ic:'fa-location-dot',bg:'#0A84FF',t:'Luogo',html:`<div style="margin-bottom:10px">${mapBox('mm',e.p)}</div><b>${e.a}</b>`},
