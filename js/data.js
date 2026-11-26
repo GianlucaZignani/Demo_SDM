@@ -5,42 +5,42 @@ const H3=[['Tutti i giorni','7:30 - 19:00']];
 
 const POIS=[
 /* --- SANITÀ E ASSISTENZA (3) --- */
-{n:'Farmacia Metanopoli Dr. Mulas',c:'Sanità e assistenza',p:[45.41715,9.26255],a:'Via Monte Bianco 10, San Donato Milanese',h:H1,t:'+39025275190',w:'http://www.farmacia-mulas.it',f:'farmacia-metanopoli.jpg'},
-{n:'IRCCS Policlinico San Donato',c:'Sanità e assistenza',p:[45.41432,9.27848],a:'Piazza Edmondo Malan 2, San Donato Milanese',h:[['Pronto Soccorso','24 ore su 24'],['Ambulatori','Lun - Ven 7:30 - 19:30']],t:'+3902527741',w:'https://www.grupposandonato.it/strutture/policlinico-san-donato',f:'policlinico-san-donato.jpg'},
-{n:'Farmacia Comunale 1',c:'Sanità e assistenza',p:[45.41807,9.27165],a:'Piazza Tevere 16, San Donato Milanese',h:[['Lunedì - Sabato','8:30 - 19:30'],['Domenica','Chiuso',1]],t:'+39025271113',w:'http://farmacia1.farmaciecomunalisandonato.it',f:'farmacia-comunale-1.jpg'},
+{n:'Farmacia Metanopoli Dr. Mulas',c:'Sanità e assistenza',p:[45.419426,9.259984],a:'Via Monte Bianco 10, San Donato Milanese',h:H1,t:'+39025275190',w:'http://www.farmacia-mulas.it',f:'farmacia-metanopoli.jpg'},
+{n:'IRCCS Policlinico San Donato',c:'Sanità e assistenza',p:[45.410813,9.277295],a:'Piazza Edmondo Malan 2, San Donato Milanese',h:[['Pronto Soccorso','24 ore su 24'],['Ambulatori','Lun - Ven 7:30 - 19:30']],t:'+3902527741',w:'https://www.grupposandonato.it/strutture/policlinico-san-donato',f:'policlinico-san-donato.jpg'},
+{n:'Farmacia Comunale n°4',c:'Sanità e assistenza',p:[45.413060,9.275513],a:'Piazza Tevere 16, San Donato Milanese',h:[['Lunedì - Sabato','8:30 - 19:30'],['Domenica','Chiuso',1]],t:'+39025271113',w:'http://farmacia1.farmaciecomunalisandonato.it',f:'farmacia-comunale-1.jpg'},
 
 /* --- ISTRUZIONE (3) --- */
-{n:'Scuola Maria Ausiliatrice',c:'Istruzione',p:[45.41265,9.26620],a:'Via Sergnano 10, San Donato Milanese',h:[['Lunedì - Venerdì','8:00 - 16:30'],['Sabato - Domenica','Chiuso',1]],t:'+39025569231',w:'https://www.mariausiliatrice.it',f:'scuola-maria-ausiliatrice.jpg'},
-{n:'Liceo Primo Levi',c:'Istruzione',p:[45.41612,9.26875],a:'Via Martiri di Cefalonia 46, San Donato Milanese',h:[['Lunedì - Sabato','7:45 - 15:00'],['Domenica','Chiuso',1]],t:'+390255691211',w:'https://www.levi.edu.it',f:'liceo-primo-levi.jpg'},
-{n:'Biblioteca Centrale Comunale Simona Orlandi',c:'Istruzione',p:[45.41495,9.26690],a:'Via Martiri di Cefalonia 51, San Donato Milanese',h:[['Lunedì - Mercoledì','13:30 - 18:00'],['Giovedì - Sabato','9:00 - 13:00'],['Domenica','Chiuso',1]],t:'+390252772400',w:'http://www.cubinrete.it/san-donato-milanese',f:'biblioteca-centrale.jpg'},
+{n:'Scuola Maria Ausiliatrice',c:'Istruzione',p:[45.422442,9.266596],a:'Via Sergnano 10, San Donato Milanese',h:[['Lunedì - Venerdì','8:00 - 16:30'],['Sabato - Domenica','Chiuso',1]],t:'+39025569231',w:'https://www.mariausiliatrice.it',f:'scuola-maria-ausiliatrice.jpg'},
+{n:'Liceo Primo Levi',c:'Istruzione',p:[45.418244019283215, 9.272836182171249],a:'Via Martiri di Cefalonia 46, San Donato Milanese',h:[['Lunedì - Sabato','7:45 - 15:00'],['Domenica','Chiuso',1]],t:'+390255691211',w:'https://www.levi.edu.it',f:'liceo-primo-levi.jpg'},
+{n:'Biblioteca Centrale Comunale Simona Orlandi',c:'Istruzione',p:[45.41730188109727, 9.267365198054875],a:'Via Martiri di Cefalonia 51, San Donato Milanese',h:[['Lunedì - Mercoledì','13:30 - 18:00'],['Giovedì - Sabato','9:00 - 13:00'],['Domenica','Chiuso',1]],t:'+390252772400',w:'http://www.cubinrete.it/san-donato-milanese',f:'biblioteca-centrale.jpg'},
 
 /* --- SERVIZI (3) --- */
-{n:'Parrocchia Santa Barbara',c:'Servizi',p:[45.41505,9.26512],a:'Piazza Santa Barbara 2, San Donato Milanese',h:[['Lunedì - Sabato','15:00 - 19:00'],['Domenica','Orario Messe']],t:'+39025275001',w:'http://www.chiesasantabarbara.it',f:'chiesa-santa-barbara.jpg'},
-{n:'Parrocchia di S. Donato Vescovo e Martire',c:'Servizi',p:[45.40765,9.27285],a:'Via Trento 6, San Donato Milanese',h:H3,t:'+39025272053',w:'http://www.parrocchiasandonato.com',f:'chiesa-san-donato.jpg'},
-{n:'Ufficio Postale Poste Italiane',c:'Servizi',p:[45.41240,9.27495],a:'Via Europa 8, San Donato Milanese',h:[['Lunedì - Venerdì','8:20 - 19:05'],['Sabato','8:20 - 12:35'],['Domenica','Chiuso',1]],t:'+390255691832',w:'https://www.poste.it',f:'poste-via-europa.jpg'},
+{n:'Parrocchia Santa Barbara',c:'Servizi',p:[45.42437411674225, 9.261564497915778],a:'Piazza Santa Barbara 2, San Donato Milanese',h:[['Lunedì - Sabato','15:00 - 19:00'],['Domenica','Orario Messe']],t:'+39025275001',w:'http://www.chiesasantabarbara.it',f:'chiesa-santa-barbara.jpg'},
+{n:'Parrocchia di S. Donato Vescovo e Martire',c:'Servizi',p:[45.414615235705696, 9.264927740318203],a:'Via Trento 6, San Donato Milanese',h:H3,t:'+39025272053',w:'http://www.parrocchiasandonato.com',f:'chiesa-san-donato.jpg'},
+{n:'Ufficio Postale Poste Italiane',c:'Servizi',p:[45.415662770222205, 9.27064538031755],a:'Via Europa 8, San Donato Milanese',h:[['Lunedì - Venerdì','8:20 - 19:05'],['Sabato','8:20 - 12:35'],['Domenica','Chiuso',1]],t:'+390255691832',w:'https://www.poste.it',f:'poste-via-europa.jpg'},
 
 /* --- SICUREZZA (3) --- */
-{n:'Comando di Polizia Locale',c:'Sicurezza',p:[45.41345,9.26835],a:'Via Martiri di Cefalonia 33, San Donato Milanese',h:[['Lunedì - Sabato','8:00 - 13:30 / 14:00 - 19:30'],['Domenica','Chiuso',1]],t:'+3902518881',w:'https://www.comune.sandonatomilanese.mi.it/polizia-locale-sicurezza',f:'polizia-locale.jpg'},
-{n:'Carabinieri - Comando Compagnia e Stazione',c:'Sicurezza',p:[45.41280,9.27915],a:'Via Felice Maritano 5, San Donato Milanese',h:[['Pronto Intervento','24 ore su 24']],t:'+390255611100',w:'https://www.carabinieri.it',f:'carabinieri-san-donato.jpg'},
-{n:'Protezione Civile San Donato Milanese',c:'Sicurezza',p:[45.40945,9.27240],a:'Via Cesare Battisti 21, San Donato Milanese',h:[['Reperibilità','24 ore su 24']],t:'+390251800077',w:'http://protezionecivilesdm.org',f:'protezione-civile.jpg'},
+{n:'Comando di Polizia Locale',c:'Sicurezza',p:[45.41632914817796, 9.26604848697331],a:'Via Martiri di Cefalonia 33, San Donato Milanese',h:[['Lunedì - Sabato','8:00 - 13:30 / 14:00 - 19:30'],['Domenica','Chiuso',1]],t:'+3902518881',w:'https://www.comune.sandonatomilanese.mi.it/polizia-locale-sicurezza',f:'polizia-locale.jpg'},
+{n:'Carabinieri',c:'Sicurezza',p:[45.414834019980965, 9.277695960346598],a:'Via Felice Maritano 5, San Donato Milanese',h:[['Pronto Intervento','24 ore su 24']],t:'+390255611100',w:'https://www.carabinieri.it',f:'carabinieri-san-donato.jpg'},
+{n:'Protezione Civile',c:'Sicurezza',p:[45.4170960384098, 9.26396463308107],a:'Via Cesare Battisti 21, San Donato Milanese',h:[['Reperibilità','24 ore su 24']],t:'+390251800077',w:'http://protezionecivilesdm.org',f:'protezione-civile.jpg'},
 
 /* --- VERDE E SVAGO (3) --- */
 {n:'Centro Sportivo Enrico Mattei',c:'Verde e svago',p:[45.427146,9.259448],a:'Via Caviaga 4, San Donato Milanese',h:[['Lunedì - Venerdì','8:00 - 23:00'],['Sabato - Domenica','8:00 - 19:30']],t:'+39025271001',w:'https://www.comune.sandonatomilanese.mi.it',f:'parco-mattei.jpg'},
-{n:'Laghetto Europa',c:'Verde e svago',p:[45.41195,9.27680],a:'Via Europa 5, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+3902527721',w:'https://www.ecomuseovettabbiafontanili.it/itinerari/evf_luoghi-di-interesse-laghetto-di-via-europa/',f:'laghetto-europa.jpg'},
-{n:'Cascina Roma - Centro Culturale',c:'Verde e svago',p:[45.41382,9.26415],a:'Piazza delle Arti 6, San Donato Milanese',h:[['Lunedì - Sabato','9:30 - 12:30 / 14:30 - 18:30'],['Domenica','10:00 - 12:30 / 16:30 - 19:00']],t:'+390252772409',w:'https://cascinaromafotografia.it',f:'cascina-roma.jpg'},
+{n:'Laghetto Europa',c:'Verde e svago',p:[45.41621493914296, 9.274538885491221],a:'Via Europa 5, San Donato Milanese',h:[['Tutti i giorni','Sempre aperto']],t:'+3902527721',w:'https://www.ecomuseovettabbiafontanili.it/itinerari/evf_luoghi-di-interesse-laghetto-di-via-europa/',f:'laghetto-europa.jpg'},
+{n:'Cascina Roma',c:'Verde e svago',p:[45.4150811147488, 9.264636399074174],a:'Piazza delle Arti 6, San Donato Milanese',h:[['Lunedì - Sabato','9:30 - 12:30 / 14:30 - 18:30'],['Domenica','10:00 - 12:30 / 16:30 - 19:00']],t:'+390252772409',w:'https://cascinaromafotografia.it',f:'cascina-roma.jpg'},
 
 /* --- SERVIZI URBANI (3) --- */
-{n:'Municipio - Comune di San Donato Milanese',c:'Servizi urbani',p:[45.41065,9.27345],a:'Via Cesare Battisti 2, San Donato Milanese',h:[['Lunedì - Mercoledì, Venerdì','8:30 - 13:00'],['Giovedì','8:30 - 13:00 / 14:00 - 16:30'],['Sabato','8:30 - 11:30'],['Domenica','Chiuso',1]],t:'+3902527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'municipio.jpg'},
-{n:'Stazione Metro M3 San Donato',c:'Servizi urbani',p:[45.42915,9.25635],a:'Via Giuseppe Impastato / Piazzale Mazzini, San Donato Milanese',h:[['Tutti i giorni','5:30 - 00:30']],t:'+390248607607',w:'https://www.atm.it',f:'metro-san-donato.jpg'},
-{n:'Stazione Ferroviaria San Donato Milanese',c:'Servizi urbani',p:[45.42415,9.25910],a:'Via Emilia, San Donato Milanese',h:[['Tutti i giorni','5:00 - 00:30']],t:'+390272494949',w:'https://www.trenord.it',f:'stazione-fs-san-donato.jpg'},
+{n:'Municipio',c:'Servizi urbani',p:[45.416638867980915, 9.265517239500188],a:'Via Cesare Battisti 2, San Donato Milanese',h:[['Lunedì - Mercoledì, Venerdì','8:30 - 13:00'],['Giovedì','8:30 - 13:00 / 14:00 - 16:30'],['Sabato','8:30 - 11:30'],['Domenica','Chiuso',1]],t:'+3902527721',w:'https://www.comune.sandonatomilanese.mi.it',f:'municipio.jpg'},
+{n:'Stazione Metro M3',c:'Servizi urbani',p:[45.428743592438884, 9.257129785179265],a:'Via Giuseppe Impastato / Piazzale Mazzini, San Donato Milanese',h:[['Tutti i giorni','5:30 - 00:30']],t:'+390248607607',w:'https://www.atm.it',f:'metro-san-donato.jpg'},
+{n:'Stazione Ferroviaria',c:'Servizi urbani',p:[45.418847271149936, 9.252835976836064],a:'Via Emilia, San Donato Milanese',h:[['Tutti i giorni','5:00 - 00:30']],t:'+390272494949',w:'https://www.trenord.it',f:'stazione-fs-san-donato.jpg'},
 
 /* --- RISTORANTI (3) --- */
-{n:'Nonna Emilia Moderna Trattoria',c:'Ristoranti',p:[45.41655,9.26185],a:'Via Monte Bianco 33, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'',w:'http://www.nonnaemilia.it',f:'nonna-emilia.jpg'},
-{n:'Ristorante Eolo',c:'Ristoranti',p:[45.41705,9.26240],a:'Via Monte Bianco 8, San Donato Milanese',h:[['Martedì - Domenica','12:00 - 14:30 / 19:00 - 22:00']],t:'',w:'',f:'ristorante-eolo.jpg'},
-{n:'SottoSopra',c:'Ristoranti',p:[45.4062,9.2775],a:'Via Emilia 26, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'+390251800607',w:'https://www.italia.it/it/lombardia/san-donato-milanese/dove-mangiare/sottosopra',f:'sottosopra.jpg'},
+{n:'Nonna Emilia Moderna Trattoria',c:'Ristoranti',p:[45.41987136233497, 9.260626462300577],a:'Via Monte Bianco 33, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'',w:'http://www.nonnaemilia.it',f:'nonna-emilia.jpg'},
+{n:'Ristorante Eolo',c:'Ristoranti',p:[45.41931421792683, 9.259751674022258],a:'Via Monte Bianco 8, San Donato Milanese',h:[['Martedì - Domenica','12:00 - 14:30 / 19:00 - 22:00']],t:'',w:'',f:'ristorante-eolo.jpg'},
+{n:'SottoSopra',c:'Ristoranti',p:[45.417877185194286, 9.260380703765824],a:'Via Emilia 26, San Donato Milanese',h:[['Orari','Consulta il sito del locale']],t:'+390251800607',w:'https://www.italia.it/it/lombardia/san-donato-milanese/dove-mangiare/sottosopra',f:'sottosopra.jpg'},
 
 /* --- HOTEL --- */
-{n:'UNAHOTELS The One Milano',c:'Hotel',p:[45.4236,9.2598],a:'Via Maastricht 3, San Donato Milanese',h:[['Reception','24 ore su 24']],t:'',w:'https://www.unahotels.it',f:'unahotels-the-one.jpg'}
+{n:'UNAHOTELS The One Milano',c:'Hotel',p:[45.417979164239746, 9.257260269744272],a:'Via Maastricht 3, San Donato Milanese',h:[['Reception','24 ore su 24']],t:'',w:'https://www.unahotels.it',f:'unahotels-the-one.jpg'}
 ];
 
 const NOTIF=[
