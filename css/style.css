@@ -364,3 +364,5 @@ html.dark .stt.no{background:#43201d;color:#FF8A80}
 .fpn .fchip i{width:18px;text-align:center}
 .fcol{display:flex;flex-direction:column;gap:8px}
 .fdiv{height:2px;border-radius:1px;background:var(--bd);margin:12px 2px}
+
+@media (min-width:960px){.cs>.card>.li{flex:1;align-items:center}}
