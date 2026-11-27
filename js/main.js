@@ -23,7 +23,7 @@ document.addEventListener('click',e=>{
 },true);
 window.addEventListener('resize',()=>{if(map)map.invalidateSize();mms.forEach(m=>m.invalidateSize())});
 (()=>{
-  const F={home:'views/home.js',notif:'views/notifiche.js',notifD:'views/notifiche.js',events:'views/eventi.js',eventD:'views/eventi.js',services:'views/servizi.js',serviceD:'views/servizi.js',admin:'views/amministrazione.js',orgs:'views/amministrazione.js',sindaco:'views/amministrazione.js',contacts:'views/contatti.js',pay:'views/pagamenti.js',report:'views/segnalazioni.js',login:'views/account.js',account:'views/account.js'};
+  const F={home:'views/home.js',notif:'views/notifiche.js',notifD:'views/notifiche.js',events:'views/eventi.js',eventD:'views/eventi.js',services:'views/servizi.js',serviceD:'views/servizi.js',admin:'views/amministrazione.js',orgs:'views/amministrazione.js',sindaco:'views/amministrazione.js',contacts:'views/contatti.js',pay:'views/pagamenti.js',report:'views/segnalazioni.js',login:'views/account.js',profile:'views/account.js',account:'views/account.js'};
   const bad=[...new Set(Object.keys(F).filter(k=>typeof window[k]!=='function').map(k=>F[k]))];
   if(typeof POIS==='undefined')bad.push('data.js');
   if(bad.length){const d=document.createElement('div');d.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:5000;background:#FF3B30;color:#fff;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.4;box-shadow:0 6px 20px rgba(0,0,0,.4)';d.innerHTML='<b>File non caricati o danneggiati:</b> '+bad.map(b=>'js/'+b).join(', ')+'<br>Sostituiscili con quelli dello zip e ricarica la pagina.';document.body.appendChild(d)}
