@@ -46,7 +46,7 @@ function enhance(){document.querySelectorAll('#lst>*').forEach((c,i)=>c.style.se
 
 /* Transizioni tra schermate stile iOS: push (fwd), pop (back), dissolvenza (fade).
    Usa la View Transitions API; dove non esiste ripiega su una semplice animazione CSS. */
-const DETAIL=['notifD','eventD','serviceD','orgs','sindaco','profile'];
+const DETAIL=['notifD','eventD','serviceD','orgs','sindaco'];
 const REDUCED=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 function transition(dir,fn){
   document.documentElement.dataset.nav=dir;
