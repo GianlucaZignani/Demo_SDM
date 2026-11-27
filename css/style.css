@@ -366,3 +366,29 @@ html.dark .stt.no{background:#43201d;color:#FF8A80}
 .fdiv{height:2px;border-radius:1px;background:var(--bd);margin:12px 2px}
 
 @media (min-width:960px){.cs>.card>.li{flex:1;align-items:center}}
+
+/* ===== Accesso simulato ===== */
+.demo{display:flex;gap:10px;align-items:center;background:rgba(255,149,0,.14);color:#B25E00;border:1px solid rgba(255,149,0,.4);border-radius:14px;padding:10px 12px;font-size:12.5px;font-weight:600;line-height:1.35}
+html.dark .demo{color:#FFB454}
+.pg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (min-width:560px){.pg{grid-template-columns:repeat(3,1fr)}}
+.pt{display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--card);color:var(--tx);border:0;border-radius:22px;padding:18px 8px;box-shadow:0 4px 14px rgba(0,0,0,.15);font:600 14px Inter,sans-serif;cursor:pointer;transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s}
+.pt:active{transform:scale(.94);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+@media (hover:hover){.pt:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.22)}}
+.pi{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:800}
+.pw{position:relative}.pw .fi{padding-right:48px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:50%;background:none;color:var(--mut);font-size:16px;cursor:pointer}
+.lnk{background:none;border:0;padding:0;color:var(--pr);font:600 13px Inter,sans-serif;cursor:pointer}
+.lnk:active{opacity:.6}
+.busy{position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.45);display:grid;place-items:center;animation:avfade .2s ease}
+.busyc{background:var(--card);border-radius:22px;padding:26px 34px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4);animation:okpop .4s cubic-bezier(.34,1.56,.64,1)}
+.nfc{position:relative;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;font-size:44px;color:var(--pr2)}
+.nfc:before,.nfc:after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--pr2);opacity:0;animation:nfcr 2s ease-out infinite}
+.nfc:after{animation-delay:1s}
+@keyframes nfcr{from{transform:scale(.5);opacity:.8}to{transform:scale(1.7);opacity:0}}
+
+/* ===== Modulo dati utente ===== */
+.fl{display:block;font-size:12px;font-weight:600;color:var(--mut);margin:14px 2px 6px}
+.card>.fl:first-child{margin-top:0}
+.soon{flex:none;font-size:11px;font-weight:700;background:var(--gr);color:var(--mut);border-radius:8px;padding:3px 8px;white-space:nowrap}
+input[type=date].fi{min-height:46px;-webkit-appearance:none;appearance:none}
