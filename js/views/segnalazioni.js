@@ -5,7 +5,7 @@ const R0=()=>({cat:'',other:'',addr:'',gps:false,pos:null,sub:'',desc:'',files:[
 let R=R0();
 const stepH=(n,ti,sub)=>`<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><span class="sn">${n}</span><div style="min-width:0"><b class="pr" style="font-size:16px">${ti}</b>${sub?`<div class="mut" style="font-size:12px;margin-top:1px">${sub}</div>`:''}</div></div>`;
 function report(A){
-  if(S.auth&&S.user&&!R.name){R.name=(S.user.name+' '+S.user.surname).trim();R.email=R.email||S.user.email||'';R.tel=R.tel||S.user.phone||''}
+  if(S.auth&&!R.name){R.name='Mario Rossi';R.email=R.email||'mario.rossi@example.it'}
   A.innerHTML=`<h1 class="t" style="margin-bottom:4px">${t('Segnalazioni')}</h1>
   <p class="mut" style="text-align:center;font-size:14px;margin:0 0 18px">Segnala un problema alla città: bastano pochi minuti.</p>
   <div style="display:flex;flex-direction:column;gap:16px">
