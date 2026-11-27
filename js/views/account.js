@@ -1,82 +1,26 @@
-/* Schermate Accesso, Account e "I miei dati".
-   I dati dell'utente si inseriscono a mano e restano salvati solo su questo dispositivo (localStorage).
-   Punto unico di accesso: loginWithProfile(profilo, origine). Quando SPID/CIE saranno attivi, basterà chiamarla con i dati
-   restituiti dal servizio, ad esempio loginWithProfile({name,surname,fiscal,birth:'AAAA-MM-GG',city,email,phone},'spid'). */
-const initials=()=>{const u=S.user;return u&&(u.name||u.surname)?(((u.name||'')[0]||'')+((u.surname||'')[0]||'')).toUpperCase():'?'};
-const fmtDate=iso=>{if(!iso)return '';const p=iso.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:iso};
-function loginWithProfile(p,source){
-  S.user={name:p.name||'',surname:p.surname||'',fiscal:p.fiscal||'',birth:p.birth||'',city:p.city||'',email:p.email||'',phone:p.phone||''};
-  S.userSource=source||'manual';S.auth=true;save();
-}
-/* modulo dei dati (usato da accesso e da "I miei dati") */
-function userForm(u){
-  u=u||{};
-  const f=(id,label,ph,val,type,extra)=>`<label class="fl" for="${id}">${label}</label><input id="${id}" class="fi" type="${type||'text'}" placeholder="${ph}" value="${esc(val||'')}" ${extra||''} oninput="this.classList.remove('err')">`;
-  const today=new Date().toISOString().slice(0,10);
-  return `<section class="card">
-    ${f('un','Nome','Es. Mario',u.name,'text','autocomplete="given-name"')}
-    ${f('us','Cognome','Es. Rossi',u.surname,'text','autocomplete="family-name"')}
-    ${f('uf','Codice fiscale (facoltativo)','RSSMRA85E12F205X',u.fiscal,'text','maxlength="16" style="text-transform:uppercase"')}
-    ${f('ub','Data di nascita','',u.birth,'date','max="'+today+'"')}
-    ${f('uc','Comune di residenza','Es. San Donato Milanese',u.city||'','text','autocomplete="address-level2"')}
-    ${f('ue','Email','nome@esempio.it',u.email,'email','autocomplete="email"')}
-    ${f('ut','Telefono (facoltativo)','Es. 333 1234567',u.phone,'tel','autocomplete="tel"')}</section>`;
-}
-function userSave(edit){
-  const v=id=>$('#'+id).value.trim();
-  const d={name:v('un'),surname:v('us'),fiscal:v('uf').toUpperCase(),birth:v('ub'),city:v('uc'),email:v('ue'),phone:v('ut')};
-  const bad=[];
-  if(d.name.length<2)bad.push('un');
-  if(d.surname.length<2)bad.push('us');
-  if(d.fiscal&&!/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/.test(d.fiscal))bad.push('uf');
-  if(!d.birth||d.birth>new Date().toISOString().slice(0,10))bad.push('ub');
-  if(d.city.length<2)bad.push('uc');
-  if(!/^\S+@\S+\.\S+$/.test(d.email))bad.push('ue');
-  if(d.phone&&!/^\+?[\d\s]{6,16}$/.test(d.phone))bad.push('ut');
-  document.querySelectorAll('.fi.err').forEach(e=>e.classList.remove('err'));
-  if(bad.length){bad.forEach(i=>$('#'+i).classList.add('err'));$('#'+bad[0]).scrollIntoView({behavior:'smooth',block:'center'});toast('Compila i campi evidenziati');return}
-  loginWithProfile(d,S.userSource||'manual');
-  if(edit){toast('Dati salvati');back()}else{toast('Accesso effettuato');transition('fade',render)}
-}
-function userDelete(){
-  if(window.confirm&&!confirm(S.lang==='en'?'Delete your data from this device?':'Eliminare i tuoi dati da questo dispositivo?'))return;
-  S.user=null;S.userSource='';S.auth=false;save();toast('Dati eliminati');stack=[];go('home',null,true);
-}
-/* accesso */
+/* Schermate Autoidentificazione e Account */
+/* ============ LOGIN / ACCOUNT ============ */
 function login(A){
-  const soon=(ic,bg,ti,sub)=>`<div class="crow" style="padding:12px;gap:12px;opacity:.62"><span class="ic" style="background:${bg}"><i class="fa-solid ${ic}"></i></span><span style="flex:1;min-width:0"><b style="font-size:14px">${ti}</b><span class="mut" style="display:block;font-size:12px">${sub}</span></span><span class="soon">Presto disponibile</span></div>`;
-  A.innerHTML=`<h1 class="t" style="margin-bottom:6px">${t('Accedi ai servizi')}</h1>
-  <p class="mut" style="text-align:center;font-size:14px;margin:0 0 6px">Inserisci i tuoi dati per accedere ai servizi del Comune.</p>
-  <h2 class="sech">ACCEDI CON IDENTITÀ DIGITALE</h2>
-  <section class="card" style="padding:4px 4px">${soon('fa-fingerprint','#0A84FF','SPID','Sistema Pubblico di Identità Digitale')}${soon('fa-id-card','#34C759','CIE',"Carta d'Identità Elettronica")}</section>
-  <h2 class="sech">OPPURE INSERISCI I TUOI DATI</h2>
-  ${userForm(S.user)}
-  <button type="button" class="btn" style="width:100%;margin-top:16px" onclick="userSave(false)">Accedi</button>
-  <p class="mut" style="font-size:12px;margin:14px 0 0;text-align:center"><i class="fa-solid fa-lock"></i> I dati restano salvati solo su questo dispositivo.</p>`;
+  A.innerHTML=`<div class="card" style="padding:30px 22px;text-align:center;margin-top:8px">
+  <div class="ic" style="width:68px;height:68px;border-radius:20px;margin:0 auto 16px;background:linear-gradient(135deg,#1F6FB5,#0A84FF);font-size:30px"><i class="fa-solid fa-user-shield"></i></div>
+  <h1 class="t" style="margin-bottom:10px">${t('Accedi ai servizi')}</h1>
+  <p style="font-size:14px;line-height:1.5;margin:0 0 24px">Seleziona "Entra con Gel" se sei in possesso di credenziali SPID/CIE/CNS. Seleziona "Entra con utente locale" se sei in possesso di credenziali dell'Ente.</p>
+  <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+    <button class="btn" style="width:100%;max-width:300px" onclick="doLogin()"><span style="width:22px;height:22px;border-radius:50%;background:#fff;color:var(--pr2);display:grid;place-items:center;font-size:11px"><i class="fa-solid fa-user"></i></span>Entra con Gel</button>
+    <button class="btn" style="width:100%;max-width:300px" onclick="doLogin()">Entra con utente locale</button></div>
+  <p class="mut" style="font-size:12px;margin:20px 0 0"><i class="fa-solid fa-lock"></i> Accesso sicuro con identità digitale</p></div>`;
 }
-/* i miei dati */
-function profile(A){
-  if(!S.auth)return login(A);
-  A.innerHTML=`${BACK()}<h1 class="t" style="margin-bottom:6px">I miei dati</h1>
-  <p class="mut" style="text-align:center;font-size:14px;margin:0 0 14px">Aggiorna le informazioni del tuo profilo.</p>
-  ${userForm(S.user)}
-  <button type="button" class="btn" style="width:100%;margin-top:16px" onclick="userSave(true)">Salva</button>
-  <button type="button" class="btn sec" style="width:100%;margin-top:10px;color:#D70015" onclick="userDelete()">Elimina i miei dati</button>
-  <p class="mut" style="font-size:12px;margin:14px 0 0;text-align:center"><i class="fa-solid fa-lock"></i> I dati restano salvati solo su questo dispositivo.</p>`;
-}
-/* account */
+function doLogin(){S.auth=true;save();toast('Accesso effettuato');transition('fade',render)}
 function account(A){
   if(!S.auth)return login(A);
-  const u=S.user||{};
   const tg=(bg,ic,l,d,k)=>`<label class="row"><span class="ic" style="background:${bg}"><i class="fa-solid ${ic}"></i></span><span style="flex:1;font-size:14px;font-weight:500">${l}${d?`<span class="mut" style="display:block;font-size:12px;font-weight:400">${d}</span>`:''}</span><input type="checkbox" class="sw" ${S[k]?'checked':''} onchange="S['${k}']=this.checked;save();${k==='dark'?'applyTheme()':''}"></label>`;
-  const line=(ic,txt)=>txt?`<div class="mut" style="font-size:13px;margin-top:3px;word-break:break-word"><i class="fa-solid ${ic}" style="width:18px"></i>${esc(txt)}</div>`:'';
   A.innerHTML=`<h1 class="t">${t('Account')}</h1>
-  <div class="card" style="display:flex;gap:16px;align-items:center">${avatarBtn()}<div style="min-width:0"><b style="font-size:19px">${esc((u.name||'')+' '+(u.surname||''))}</b>
-    ${line('fa-cake-candles',fmtDate(u.birth))}${line('fa-location-dot',u.city)}${line('fa-envelope',u.email)}</div></div>
+  <div class="card" style="display:flex;gap:16px;align-items:center">${avatarBtn()}<div style="min-width:0"><b style="font-size:19px">Mario Rossi</b>
+    <div class="mut" style="font-size:13px;margin-top:4px"><i class="fa-solid fa-cake-candles" style="width:18px"></i>12/05/1985</div>
+    <div class="mut" style="font-size:13px;margin-top:2px"><i class="fa-solid fa-location-dot" style="width:18px"></i>San Donato Milanese (MI)</div></div></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
     <div class="card stat" onclick="go('report')"><div class="n">${S.reports.length}</div><div class="l">Le mie segnalazioni</div></div>
     <div class="card stat" onclick="go('notif')"><div class="n">${unread()}</div><div class="l">Notifiche non lette</div></div></div>
-  <section class="card" style="padding:4px 4px;margin-top:14px"><div class="crow"><button type="button" class="mi" onclick="go('profile')"><span class="ic" style="background:#0A84FF"><i class="fa-solid fa-user-pen"></i></span><span style="flex:1"><b style="font-size:14px">I miei dati</b><span class="mut" style="display:block;font-size:12px">Modifica nome, data di nascita e contatti</span></span><i class="fa-solid fa-chevron-right mut"></i></button></div></section>
   <h2 class="sech">PREFERENZE APP</h2>
   <div class="card" style="padding:4px 16px"><div class="row"><span class="ic" style="background:#0A84FF"><i class="fa-solid fa-globe"></i></span><span style="flex:1;font-size:14px;font-weight:500">Lingua</span><select class="fi" style="width:auto;padding:8px 12px" onchange="setLang(this.value)"><option value="it" ${S.lang==='it'?'selected':''}>Italiano</option><option value="en" ${S.lang==='en'?'selected':''}>English</option></select></div>${tg('#5856D6','fa-moon','Tema Scuro','','dark')}</div>
   <h2 class="sech">NOTIFICHE E AVVISI</h2>
@@ -90,7 +34,7 @@ function avatarInner(){
   const a=S.avatar;
   if(a&&a.t==='photo')return `<img src="${a.v}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
   if(a&&a.t==='emoji')return `<span style="font-size:34px;line-height:1">${a.v}</span>`;
-  return initials();
+  return 'MR';
 }
 function avatarBtn(){
   const a=S.avatar,bg=a&&a.t==='emoji'?'#DCEBFF':a&&a.t==='photo'?'transparent':'#1F4E9C';
